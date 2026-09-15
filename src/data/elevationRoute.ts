@@ -1,0 +1,143 @@
+import type { Waypoint } from '../types/trek';
+
+export const WAYPOINTS: Waypoint[] = [
+  {
+    id: 'pokhara',
+    name: 'Pokhara Lakeside',
+    altitudeMeters: 822,
+    altitudeFeet: 2697,
+    distanceKm: 0,
+    dayNumber: 2,
+    oxygenSaturationEst: 99,
+    avgTempDayNight: '24°C / 14°C',
+    coordinates: '28.2096° N, 83.9856° E',
+    description: 'Expedition staging city along Phewa Lake. Serene tropical climate facing the snowy northern wall of Annapurna.',
+    statusHighlight: 'Acclimatization Base',
+    scenicViews: ['Lake Phewa reflection', 'Fishtail inverted peak', 'Peace Pagoda']
+  },
+  {
+    id: 'matque',
+    name: 'Matque Trailhead',
+    altitudeMeters: 1070,
+    altitudeFeet: 3510,
+    distanceKm: 4,
+    dayNumber: 3,
+    oxygenSaturationEst: 97,
+    avgTempDayNight: '22°C / 13°C',
+    coordinates: '28.3712° N, 83.8124° E',
+    description: 'Deepest motorable roadhead in the Modi Khola valley where the expedition foot-march officially commences.',
+    statusHighlight: 'Trailhead Checkpoint',
+    scenicViews: ['Modi River canyon', 'Terraced rice fields', 'Suspension bridges']
+  },
+  {
+    id: 'jhinu',
+    name: 'Jhinu Danda',
+    altitudeMeters: 1780,
+    altitudeFeet: 5840,
+    distanceKm: 10.5,
+    dayNumber: 3,
+    oxygenSaturationEst: 94,
+    avgTempDayNight: '19°C / 10°C',
+    coordinates: '28.3980° N, 83.8202° E',
+    description: 'Famed natural geothermal hot springs nestled on the banks of the Modi Khola. Superb spot for muscle recovery.',
+    statusHighlight: 'Natural Geothermal Springs',
+    scenicViews: ['Modi Khola riverbed', 'Upper Chhomrong ridges', 'Subtropical flora']
+  },
+  {
+    id: 'chhomrong',
+    name: 'Chhomrong Village',
+    altitudeMeters: 2170,
+    altitudeFeet: 7119,
+    distanceKm: 15.5,
+    dayNumber: 4,
+    oxygenSaturationEst: 91,
+    avgTempDayNight: '17°C / 7°C',
+    coordinates: '28.4192° N, 83.8210° E',
+    description: 'Largest Gurung settlement in the sanctuary valley, renowned for stone-paved alleys, bakeries, and close-up views of Annapurna South.',
+    statusHighlight: 'Cultural Gurung Hub',
+    scenicViews: ['Annapurna South (7,219m)', 'Hiunchuli sheer face', 'Machapuchare spire']
+  },
+  {
+    id: 'sinuwa',
+    name: 'Upper Sinuwa',
+    altitudeMeters: 2340,
+    altitudeFeet: 7677,
+    distanceKm: 18.5,
+    dayNumber: 4,
+    oxygenSaturationEst: 89,
+    avgTempDayNight: '16°C / 5°C',
+    coordinates: '28.4345° N, 83.8340° E',
+    description: 'High forest ridge separating the agricultural settlements from the uninhabited sacred sanctuary forests.',
+    statusHighlight: 'Sanctuary Forest Threshold',
+    scenicViews: ['Chhomrong valley panorama', 'Dense oak & bamboo ridge', 'Fishtail East wall']
+  },
+  {
+    id: 'bamboo',
+    name: 'Bamboo',
+    altitudeMeters: 2310,
+    altitudeFeet: 7578,
+    distanceKm: 22,
+    dayNumber: 4,
+    oxygenSaturationEst: 89,
+    avgTempDayNight: '15°C / 4°C',
+    coordinates: '28.4510° N, 83.8512° E',
+    description: 'Settlement nestled under giant bamboo canopies along the cascading Modi river. Cool, humid mountain microclimate.',
+    statusHighlight: 'River Rainforest',
+    scenicViews: ['Moss-covered waterfalls', 'Langur monkey habitats', 'Deep gorge walls']
+  },
+  {
+    id: 'deurali',
+    name: 'Deurali Canyon',
+    altitudeMeters: 3230,
+    altitudeFeet: 10597,
+    distanceKm: 32.5,
+    dayNumber: 5,
+    oxygenSaturationEst: 80,
+    avgTempDayNight: '10°C / -1°C',
+    coordinates: '28.4891° N, 83.8640° E',
+    description: 'High rocky gorge where vegetation thins out into alpine scrub. Home to the historic Hinku overhang cave.',
+    statusHighlight: 'Sub-Alpine Transition (3,000m+)',
+    scenicViews: ['Hinku Cave rock overhang', 'Glacial melt torrents', 'Avalanche chutes']
+  },
+  {
+    id: 'mbc',
+    name: 'Machapuchare Base Camp (MBC)',
+    altitudeMeters: 3700,
+    altitudeFeet: 12139,
+    distanceKm: 39.3,
+    dayNumber: 6,
+    oxygenSaturationEst: 74,
+    avgTempDayNight: '6°C / -5°C',
+    coordinates: '28.5140° N, 83.8710° E',
+    description: 'The monumental gateway into the Annapurna Sanctuary. The sacred and unclimbed Fishtail pinnacle looms directly overhead.',
+    statusHighlight: 'Sanctuary Gateway',
+    scenicViews: ['Machapuchare West Face (6,993m)', 'Glacial moraine meadows', 'Gangapurna ridge']
+  },
+  {
+    id: 'abc',
+    name: 'Annapurna Base Camp (ABC)',
+    altitudeMeters: 4130,
+    altitudeFeet: 13550,
+    distanceKm: 44.5,
+    dayNumber: 7,
+    oxygenSaturationEst: 62,
+    avgTempDayNight: '3°C / -10°C',
+    coordinates: '28.5306° N, 83.8780° E',
+    description: 'The world-famous glacial amphitheater encircled by 10 soaring peaks over 6,000m to 8,091m. The ultimate goal of the expedition.',
+    statusHighlight: 'Summit Sanctuary Goal',
+    scenicViews: ['Annapurna I South Face (8,091m)', 'Annapurna South (7,219m)', 'Hiunchuli (6,441m)', 'Glacial moraine icefields']
+  }
+];
+
+export const LIVE_TELEMETRY_DATA = {
+  coordinates: '28.5306° N, 83.8780° E',
+  elevationAbcMeters: 4130,
+  elevationAbcFeet: 13550,
+  oxygenLevelAbcPct: 62.4,
+  currentTempAbc: '-2°C',
+  windSpeedAbc: '14 km/h NW',
+  visibilityRating: 'Exceptional (99.8%)',
+  barometricPressure: '625 hPa',
+  avalancheRiskLevel: 'Low / Optimal Trail Condition',
+  satelliteConnection: 'IRIDIUM_ACTIVE_ONLINE'
+};
