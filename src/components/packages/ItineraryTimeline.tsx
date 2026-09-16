@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import type { PackageTier } from '../../types/trek';
 import { TREK_PACKAGES } from '../../data/packages';
 import { 
@@ -9,9 +9,12 @@ import {
   HeartHandshake, 
   ShieldCheck, 
   ArrowRight, 
+  ArrowLeft,
   Compass, 
   Footprints, 
-  Clock 
+  Clock,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 interface ItineraryTimelineProps {
@@ -26,9 +29,66 @@ export const ItineraryTimeline: React.FC<ItineraryTimelineProps> = ({
   onBookTier
 }) => {
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const dayButtonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const currentPackage = TREK_PACKAGES[activeTier];
   const activeDay = currentPackage.itinerary[selectedDayIndex] || currentPackage.itinerary[0];
+
+  // Auto-scroll when selected day changes (e.g. clicking Day 6 near edge centers it and reveals Day 7)
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    const targetButton = dayButtonRefs.current[selectedDayIndex];
+    if (!container || !targetButton) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = targetButton.getBoundingClientRect();
+
+    // Position of button relative to the scroll container's content
+    const currentScrollLeft = container.scrollLeft;
+    const buttonRelativeLeft = buttonRect.left - containerRect.left + currentScrollLeft;
+    
+    // Center the target day button in the container so subsequent days are clearly visible
+    const targetScrollLeft = buttonRelativeLeft - (container.clientWidth / 2) + (buttonRect.width / 2);
+
+    container.scrollTo({
+      left: Math.max(0, targetScrollLeft),
+      behavior: 'smooth'
+    });
+  }, [selectedDayIndex, activeTier]);
+
+  // Check scroll boundary visibility for left/right chevrons
+  const checkScrollability = () => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  };
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    checkScrollability();
+    el.addEventListener('scroll', checkScrollability, { passive: true });
+    window.addEventListener('resize', checkScrollability);
+    return () => {
+      el.removeEventListener('scroll', checkScrollability);
+      window.removeEventListener('resize', checkScrollability);
+    };
+  }, [activeTier]);
+
+  const handleScrollBy = (direction: 'left' | 'right') => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const scrollAmount = Math.max(260, Math.floor(el.clientWidth * 0.65));
+    el.scrollBy({
+      left: direction === 'right' ? scrollAmount : -scrollAmount,
+      behavior: 'smooth'
+    });
+  };
 
   return (
     <section id="itineraries" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -66,14 +126,44 @@ export const ItineraryTimeline: React.FC<ItineraryTimelineProps> = ({
         </div>
       </div>
 
-      {/* Day Selector Ribbon */}
-      <div className="relative mb-8">
-        <div className="flex items-center gap-3 overflow-x-auto pb-4 scrollbar-thin">
+      {/* Day Selector Ribbon with Auto-Scroll & Controls */}
+      <div className="relative mb-8 group">
+        {/* Left Scroll Arrow */}
+        {canScrollLeft && (
+          <button
+            type="button"
+            onClick={() => handleScrollBy('left')}
+            className="hidden sm:flex absolute -left-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white shadow-lg border border-slate-200 text-slate-700 hover:text-slate-950 hover:bg-slate-50 items-center justify-center transition-all cursor-pointer"
+            aria-label="Scroll days left"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+        )}
+
+        {/* Right Scroll Arrow */}
+        {canScrollRight && (
+          <button
+            type="button"
+            onClick={() => handleScrollBy('right')}
+            className="hidden sm:flex absolute -right-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white shadow-lg border border-slate-200 text-slate-700 hover:text-slate-950 hover:bg-slate-50 items-center justify-center transition-all cursor-pointer"
+            aria-label="Scroll days right"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        )}
+
+        <div
+          ref={scrollContainerRef}
+          className="flex items-center gap-3 overflow-x-auto pb-4 scroll-smooth [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-slate-100 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-slate-400"
+        >
           {currentPackage.itinerary.map((dayItem, idx) => {
             const isSelected = selectedDayIndex === idx;
             return (
               <button
                 key={dayItem.day}
+                ref={(el) => {
+                  dayButtonRefs.current[idx] = el;
+                }}
                 onClick={() => setSelectedDayIndex(idx)}
                 className={`shrink-0 px-4 py-3 rounded-2xl text-left transition-all duration-200 border cursor-pointer ${
                   isSelected
@@ -259,6 +349,41 @@ export const ItineraryTimeline: React.FC<ItineraryTimelineProps> = ({
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Day-by-Day Pagination Controls (Auto-scrolls the ribbon when advancing) */}
+        <div className="flex items-center justify-between border-t border-slate-100 pt-6 mt-8">
+          <button
+            type="button"
+            disabled={selectedDayIndex === 0}
+            onClick={() => setSelectedDayIndex((prev) => Math.max(0, prev - 1))}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              selectedDayIndex === 0
+                ? 'opacity-40 cursor-not-allowed text-slate-400'
+                : 'text-slate-700 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 border border-slate-200 cursor-pointer'
+            }`}
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Previous Day (Day {selectedDayIndex > 0 ? selectedDayIndex.toString().padStart(2, '0') : '01'})</span>
+          </button>
+
+          <div className="text-xs font-bold text-slate-500">
+            Day {selectedDayIndex + 1} of {currentPackage.itinerary.length}
+          </div>
+
+          <button
+            type="button"
+            disabled={selectedDayIndex === currentPackage.itinerary.length - 1}
+            onClick={() => setSelectedDayIndex((prev) => Math.min(currentPackage.itinerary.length - 1, prev + 1))}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              selectedDayIndex === currentPackage.itinerary.length - 1
+                ? 'opacity-40 cursor-not-allowed text-slate-400'
+                : 'text-sky-700 hover:text-sky-950 bg-sky-50 hover:bg-sky-100 border border-sky-200 cursor-pointer'
+            }`}
+          >
+            <span>Next Day (Day {selectedDayIndex < currentPackage.itinerary.length - 1 ? (selectedDayIndex + 2).toString().padStart(2, '0') : currentPackage.itinerary.length})</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </section>
