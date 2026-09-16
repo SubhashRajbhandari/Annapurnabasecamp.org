@@ -1,6 +1,6 @@
-﻿User-agent: *
+User-agent: *
 Allow: /
 
 # Host & Sitemap
-Host: https://annapurnabasecamp.org
-Sitemap: https://annapurnabasecamp.org/sitemap.xml
+Host: https://www.annapurnabasecamp.org
+Sitemap: https://www.annapurnabasecamp.org/sitemap.xml
