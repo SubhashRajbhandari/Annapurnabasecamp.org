@@ -32,7 +32,7 @@ export const TierSelector: React.FC<TierSelectorProps> = ({
         </p>
 
         {/* Tier Switcher Pills */}
-        <div className="inline-flex p-1.5 rounded-2xl bg-white border border-slate-200 mt-8 shadow-sm">
+        <div className="inline-flex max-w-full overflow-x-auto scrollbar-none p-1.5 rounded-2xl bg-white border border-slate-200 mt-8 shadow-sm">
           {tiers.map((tier) => {
             const pkg = TREK_PACKAGES[tier];
             const isActive = activeTier === tier;

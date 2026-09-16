@@ -7,7 +7,7 @@ export const FloatingConcierge: React.FC = () => {
   return (
     <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40">
       {!minimized ? (
-        <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-2xl rounded-3xl p-3.5 sm:p-4 max-w-xs text-slate-900 transition-all duration-300 animate-fadeIn relative">
+        <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-2xl rounded-3xl p-3.5 sm:p-4 max-w-[calc(100vw-2rem)] sm:max-w-xs text-slate-900 transition-all duration-300 animate-fadeIn relative">
           <button
             onClick={() => setMinimized(true)}
             className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs shadow-md hover:bg-slate-800 transition-colors"
