@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Compass, Calendar, Users, ShieldCheck, ArrowRight, Star, HeartHandshake, ChevronDown } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Compass, Calendar, Users, ShieldCheck, ArrowRight, Star, HeartHandshake, ChevronDown, Volume2, VolumeX, Play, Pause } from 'lucide-react';
 import type { PackageTier } from '../../types/trek';
 
 interface HeroProps {
@@ -10,6 +10,62 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
   const [selectedTier, setSelectedTier] = useState<PackageTier>('4-star');
   const [selectedMonth, setSelectedMonth] = useState('October 2026 (Peak Autumn)');
   const [partySize, setPartySize] = useState(2);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const START_TIME = 95; // 1:35 in seconds (95s)
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const startPlayback = () => {
+      if (video.currentTime < START_TIME) {
+        video.currentTime = START_TIME;
+      }
+      video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+    };
+
+    if (video.readyState >= 1) {
+      startPlayback();
+    }
+
+    const onLoaded = () => startPlayback();
+    const onEnded = () => {
+      video.currentTime = START_TIME;
+      video.play().catch(() => {});
+    };
+
+    video.addEventListener('loadedmetadata', onLoaded);
+    video.addEventListener('ended', onEnded);
+
+    return () => {
+      video.removeEventListener('loadedmetadata', onLoaded);
+      video.removeEventListener('ended', onEnded);
+    };
+  }, []);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      if (video.currentTime < START_TIME) {
+        video.currentTime = START_TIME;
+      }
+      video.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  };
 
   const handleQuickSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,14 +79,38 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
 
   return (
     <section className="relative min-h-[92vh] flex flex-col justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white">
-      {/* Cinematic High-Resolution Mountain Panorama Background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-1000"
-        style={{ backgroundImage: `url('/images/hero-annapurna-white.jpg')` }}
-      />
+      {/* Cinematic High-Resolution Mountain Video Background (Starts at 1:35 and loops) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Fallback mountain image while video loads */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
+          style={{ backgroundImage: `url('/images/hero-annapurna-white.jpg')` }}
+        />
+        {/* Ambient Trekking Video */}
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover scale-105"
+          poster="/images/hero-annapurna-white.jpg"
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          onLoadedMetadata={(e) => {
+            e.currentTarget.currentTime = START_TIME;
+            e.currentTarget.play().catch(() => {});
+          }}
+          onEnded={(e) => {
+            e.currentTarget.currentTime = START_TIME;
+            e.currentTarget.play().catch(() => {});
+          }}
+        >
+          <source src="/videos/nepal-annapurna-trek.mp4" type="video/mp4" />
+          <source src="/Nepal - Annapurna Base Camp Trek.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       {/* Warm Gradient Scrim - Clean, High Contrast for Supreme Legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-900/40 to-slate-950/90 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/75 via-slate-900/45 to-slate-950/90 pointer-events-none" />
 
       {/* Main Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center my-auto">
@@ -177,6 +257,32 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Floating Ambient Video Control Pill */}
+      <div className="absolute bottom-3 right-4 sm:bottom-5 sm:right-6 z-20 flex items-center gap-2.5 bg-slate-950/75 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full text-xs text-white shadow-xl pointer-events-auto">
+        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span className="hidden sm:inline text-[11px] font-semibold tracking-wide text-slate-200">
+          Annapurna Sanctuary 4K (1:35 Loop)
+        </span>
+        <button
+          type="button"
+          onClick={togglePlay}
+          aria-label={isPlaying ? 'Pause video' : 'Play video'}
+          className="p-1 rounded-full hover:bg-white/20 transition-colors cursor-pointer text-slate-200 hover:text-white"
+          title={isPlaying ? 'Pause' : 'Play'}
+        >
+          {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+        </button>
+        <button
+          type="button"
+          onClick={toggleMute}
+          aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+          className="p-1 rounded-full hover:bg-white/20 transition-colors cursor-pointer text-slate-200 hover:text-white"
+          title={isMuted ? 'Unmute' : 'Mute'}
+        >
+          {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+        </button>
       </div>
     </section>
   );
