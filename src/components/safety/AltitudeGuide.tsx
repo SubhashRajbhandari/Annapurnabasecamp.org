@@ -55,7 +55,7 @@ export const AltitudeGuide: React.FC = () => {
         <div className="shrink-0 flex items-center gap-3 text-xs">
           <div className="bg-white px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 font-semibold shadow-xs flex items-center gap-2">
             <PhoneCall className="w-4 h-4 text-sky-600" />
-            <span>Emergency Dispatch: <strong>+977 (01) 4700-ABC</strong></span>
+            <span>Emergency Dispatch: <a href="tel:+97714700888" className="font-bold hover:text-sky-600 transition-colors">+977 1 4700888</a></span>
           </div>
         </div>
       </div>

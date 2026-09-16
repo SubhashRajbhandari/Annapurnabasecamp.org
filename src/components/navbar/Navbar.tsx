@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="hidden md:inline text-slate-600">•</span>
             <div className="hidden md:flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors">
               <Phone className="w-3 h-3 text-sky-400" />
-              <span>+977 (01) 4700-ABC (KTM HQ)</span>
+              <span>+977 1 4700888 (KTM HQ)</span>
             </div>
             <span className="hidden lg:inline text-slate-600">•</span>
             <div className="hidden lg:flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors">
@@ -39,7 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Right: Quick Assistance & Weather note */}
           <div className="flex items-center gap-3 text-[11px]">
             <a
-              href="https://wa.me/9779841234567"
+              href="https://wa.me/9779851082437?text=Namaste!%20I%20am%20interested%20in%20booking%20the%20Annapurna%20Base%20Camp%20Trek."
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors font-medium"
@@ -99,8 +99,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
               <span>Safety & Gear</span>
             </a>
+            <a href="#faq" className="hover:text-sky-600 transition-colors py-1">
+              FAQ
+            </a>
             <a href="#booking" className="hover:text-sky-600 transition-colors py-1">
-              Customizer & Pricing
+              Pricing
             </a>
           </nav>
 
@@ -156,6 +159,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="py-2.5 px-3 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-900 font-semibold"
             >
               <ShieldCheck className="w-4 h-4 text-emerald-600" /> Acclimatization & Packing Checklist
+            </a>
+            <a 
+              href="#faq" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2.5 px-3 rounded-xl hover:bg-slate-50 text-slate-900 font-semibold"
+            >
+              Frequently Asked Questions (FAQ)
             </a>
             <a 
               href="#booking" 

@@ -9,6 +9,8 @@ import { BookingEngine } from './components/booking/BookingEngine';
 import { BookingModal } from './components/booking/BookingModal';
 import { AltitudeGuide } from './components/safety/AltitudeGuide';
 import { GearChecklist } from './components/safety/GearChecklist';
+import { FaqSection } from './components/faq/FaqSection';
+import { FloatingConcierge } from './components/common/FloatingConcierge';
 import { Footer } from './components/footer/Footer';
 import type { PackageTier, BookingFormState } from './types/trek';
 
@@ -108,7 +110,13 @@ export const App: React.FC = () => {
           <AltitudeGuide />
           <GearChecklist />
         </section>
+
+        {/* Essential Himalayan Knowledge & FAQs for Trekking in Nepal */}
+        <FaqSection />
       </main>
+
+      {/* Floating Sherpa Concierge for Instant WhatsApp Conversions */}
+      <FloatingConcierge />
 
       {/* Official Portal Footer */}
       <Footer />

@@ -120,17 +120,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           <span>Official Trekking Guidance & Luxury Booking Portal • 4,130m / 13,550ft</span>
         </div>
 
-        {/* Main Headline */}
+        {/* Main Headline - High-Impact Target SEO Heading */}
         <h1 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white max-w-5xl leading-[1.14] mb-5 drop-shadow-[0_4px_20px_rgba(0,0,0,0.85)]">
-          Ascend to the Sacred{' '}
+          Annapurna Base Camp Trek{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-sky-300 to-cyan-200">
-            Annapurna Sanctuary
+            (ABC Nepal 4,130m)
           </span>
         </h1>
 
-        {/* Subtitle */}
+        {/* Subtitle with Primary Search Keywords */}
         <p className="text-sm sm:text-lg md:text-xl text-slate-100 max-w-3xl leading-relaxed mb-8 font-medium drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
-          Handcrafted Himalayan trekking journeys with certified Sherpa leaders, dedicated 1:1 porters, boutique mountain lodges, and direct VIP helicopter descents.
+          The official authority portal for premier trekking in Nepal. Handcrafted Annapurna Base Camp (ABC) expeditions with certified Sherpa leaders, dedicated 1:1 porters, boutique mountain lodges, and direct VIP helicopter descents.
         </p>
 
         {/* Interactive Floating Quick-Booking Bar (Fishtail Tours Style) */}

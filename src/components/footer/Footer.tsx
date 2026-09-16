@@ -61,6 +61,11 @@ export const Footer: React.FC = () => {
                   Topographic Route & Altitude Profile
                 </a>
               </li>
+              <li>
+                <a href="#faq" className="hover:text-white transition-colors">
+                  ABC Trekking FAQs & Guide
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -86,15 +91,15 @@ export const Footer: React.FC = () => {
             <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700 space-y-2.5 text-xs">
               <div className="flex items-center gap-2 text-white font-medium">
                 <Phone className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                <span>+977 (01) 4700-ABC (KTM HQ)</span>
+                <a href="tel:+97714700888" className="hover:text-sky-300 transition-colors">+977 1 4700888 (KTM HQ)</a>
               </div>
               <div className="flex items-center gap-2 text-white font-medium">
                 <MessageSquare className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>+977 9841-ABC-TREK (WhatsApp)</span>
+                <a href="https://wa.me/9779851082437?text=Namaste!%20I%20am%20interested%20in%20the%20Annapurna%20Base%20Camp%20Trek." target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">+977 9851-082437 (WhatsApp 24/7)</a>
               </div>
               <div className="flex items-center gap-2 text-white font-medium">
                 <Mail className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                <span>expedition@annapurnabasecamp.org</span>
+                <a href="mailto:expedition@annapurnabasecamp.org" className="hover:text-sky-300 transition-colors">expedition@annapurnabasecamp.org</a>
               </div>
               <div className="flex items-center gap-2 text-slate-400 pt-1 border-t border-slate-700 text-[11px]">
                 <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
