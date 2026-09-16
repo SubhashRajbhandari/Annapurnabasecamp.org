@@ -39,7 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Right: Quick Assistance & Weather note */}
           <div className="flex items-center gap-3 text-[11px]">
             <a
-              href="https://wa.me/9779851082437?text=Namaste!%20I%20am%20interested%20in%20booking%20the%20Annapurna%20Base%20Camp%20Trek."
+              href="https://wa.me/9779820107807?text=Namaste!%20I%20am%20interested%20in%20booking%20the%20Annapurna%20Base%20Camp%20Trek."
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors font-medium"

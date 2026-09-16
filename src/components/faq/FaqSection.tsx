@@ -354,7 +354,7 @@ export const FaqSection: React.FC = () => {
 
         <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
           <a
-            href="https://wa.me/9779851082437?text=Namaste!%20I%20have%20a%20question%20about%20the%20Annapurna%20Base%20Camp%20Trek."
+            href="https://wa.me/9779820107807?text=Namaste!%20I%20have%20a%20question%20about%20the%20Annapurna%20Base%20Camp%20Trek."
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all cursor-pointer"

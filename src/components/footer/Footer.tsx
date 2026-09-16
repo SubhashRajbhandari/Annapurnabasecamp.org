@@ -95,7 +95,7 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex items-center gap-2 text-white font-medium">
                 <MessageSquare className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <a href="https://wa.me/9779851082437?text=Namaste!%20I%20am%20interested%20in%20the%20Annapurna%20Base%20Camp%20Trek." target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">+977 9851-082437 (WhatsApp 24/7)</a>
+                <a href="https://wa.me/9779820107807?text=Namaste!%20I%20am%20interested%20in%20the%20Annapurna%20Base%20Camp%20Trek." target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors">+977 9820-107807 (WhatsApp 24/7)</a>
               </div>
               <div className="flex items-center gap-2 text-white font-medium">
                 <Mail className="w-3.5 h-3.5 text-sky-400 shrink-0" />
