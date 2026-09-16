@@ -12,6 +12,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
   const [partySize, setPartySize] = useState(2);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+  const [isVideoReady, setIsVideoReady] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const START_TIME = 95; // 1:35 in seconds (95s)
@@ -24,24 +25,30 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
       if (video.currentTime < START_TIME) {
         video.currentTime = START_TIME;
       }
-      video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+      video.play().then(() => {
+        setIsPlaying(true);
+        setIsVideoReady(true);
+      }).catch(() => setIsPlaying(false));
     };
 
-    if (video.readyState >= 1) {
+    if (video.readyState >= 2) {
       startPlayback();
     }
 
     const onLoaded = () => startPlayback();
+    const onPlaying = () => setIsVideoReady(true);
     const onEnded = () => {
       video.currentTime = START_TIME;
       video.play().catch(() => {});
     };
 
     video.addEventListener('loadedmetadata', onLoaded);
+    video.addEventListener('playing', onPlaying);
     video.addEventListener('ended', onEnded);
 
     return () => {
       video.removeEventListener('loadedmetadata', onLoaded);
+      video.removeEventListener('playing', onPlaying);
       video.removeEventListener('ended', onEnded);
     };
   }, []);
@@ -81,20 +88,23 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
     <section className="relative min-h-[92vh] flex flex-col justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white">
       {/* Cinematic High-Resolution Mountain Video Background (Starts at 1:35 and loops) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Fallback mountain image while video loads */}
+        {/* Fallback clean mountain image while video loads */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-all duration-1000"
           style={{ backgroundImage: `url('/images/hero-annapurna-white.jpg')` }}
         />
-        {/* Ambient Trekking Video */}
+        {/* Ambient Trekking Video with Smooth Fade-In */}
         <video
           ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover scale-105"
+          className={`absolute inset-0 w-full h-full object-cover scale-105 transition-opacity duration-1000 ${
+            isVideoReady ? 'opacity-100' : 'opacity-0'
+          }`}
           poster="/images/hero-annapurna-white.jpg"
           autoPlay
           muted
           playsInline
           preload="auto"
+          onPlaying={() => setIsVideoReady(true)}
           onLoadedMetadata={(e) => {
             e.currentTarget.currentTime = START_TIME;
             e.currentTarget.play().catch(() => {});
