@@ -70,7 +70,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-amber-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-amber-500 selection:text-white w-full max-w-full overflow-x-hidden">
       {/* Prestigious Luxury Navbar with Utility Bar */}
       <Navbar
         telemetry={telemetry}

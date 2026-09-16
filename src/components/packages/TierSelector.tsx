@@ -17,22 +17,22 @@ export const TierSelector: React.FC<TierSelectorProps> = ({
   const tiers: PackageTier[] = ['3-star', '4-star', '5-star'];
 
   return (
-    <section id="packages" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="packages" className="py-14 sm:py-20 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full max-w-full">
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold mb-3 shadow-xs">
-          <Sparkles className="w-4 h-4 text-amber-600" />
+      <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold mb-3 shadow-xs">
+          <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
           <span>Handcrafted Himalayan Journey Tiers</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mb-4">
+        <h2 className="text-2xl xs:text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mb-3 sm:mb-4">
           Choose Your Expedition Experience
         </h2>
-        <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+        <p className="text-slate-600 text-xs sm:text-base leading-relaxed px-2">
           Every trekker has distinct comfort and logistical desires. Compare our authentic 3-Star Alpine Explorer, the popular 4-Star Mountain Premier with 1:1 dedicated porters, and the 5-Star Himalayan Sanctuary Luxury featuring VIP helicopter returns.
         </p>
 
         {/* Tier Switcher Pills */}
-        <div className="inline-flex max-w-full overflow-x-auto scrollbar-none p-1.5 rounded-2xl bg-white border border-slate-200 mt-8 shadow-sm">
+        <div className="flex max-w-full overflow-x-auto p-1 sm:p-1.5 rounded-2xl bg-white border border-slate-200 mt-6 sm:mt-8 shadow-sm justify-start sm:justify-center gap-1">
           {tiers.map((tier) => {
             const pkg = TREK_PACKAGES[tier];
             const isActive = activeTier === tier;
@@ -40,7 +40,7 @@ export const TierSelector: React.FC<TierSelectorProps> = ({
               <button
                 key={tier}
                 onClick={() => onSelectTier(tier)}
-                className={`px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+                className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center gap-1.5 cursor-pointer shrink-0 whitespace-nowrap ${
                   isActive
                     ? 'bg-slate-900 text-white shadow-md'
                     : 'text-slate-600 hover:text-slate-950 hover:bg-slate-50'

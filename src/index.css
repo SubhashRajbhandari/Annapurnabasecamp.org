@@ -11,16 +11,28 @@
     scroll-behavior: smooth;
     color-scheme: light;
     background-color: #f8fafc;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
     background-color: #f8fafc;
     color: #1e293b;
     min-height: 100vh;
     font-family: var(--font-body);
+    position: relative;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {

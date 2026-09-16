@@ -85,7 +85,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
   };
 
   return (
-    <section className="relative min-h-[92vh] flex flex-col justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white">
+    <section className="relative min-h-[92vh] flex flex-col justify-center pt-20 sm:pt-24 pb-14 sm:pb-16 px-3 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white w-full max-w-full">
       {/* Cinematic High-Resolution Mountain Video Background (Starts at 1:35 and loops) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Fallback clean mountain image while video loads */}
@@ -125,13 +125,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
       {/* Main Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center my-auto">
         {/* Top Authority Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-semibold mb-6 backdrop-blur-md shadow-sm">
-          <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
-          <span>Official Trekking Guidance & Luxury Booking Portal • 4,130m / 13,550ft</span>
+        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[10px] sm:text-sm font-semibold mb-4 sm:mb-6 backdrop-blur-md shadow-sm max-w-full">
+          <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
+          <span className="truncate">Official Trekking Guidance & Luxury Portal • 4,130m / 13,550ft</span>
         </div>
 
         {/* Main Headline - High-Impact Target SEO Heading */}
-        <h1 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white max-w-5xl leading-[1.14] mb-5 drop-shadow-[0_4px_20px_rgba(0,0,0,0.85)]">
+        <h1 className="text-2xl xs:text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white max-w-5xl leading-[1.14] mb-3 sm:mb-5 drop-shadow-[0_4px_20px_rgba(0,0,0,0.85)]">
           Annapurna Base Camp Trek{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-sky-300 to-cyan-200">
             (ABC Nepal 4,130m)
@@ -139,14 +139,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
         </h1>
 
         {/* Subtitle with Primary Search Keywords */}
-        <p className="text-sm sm:text-lg md:text-xl text-slate-100 max-w-3xl leading-relaxed mb-8 font-medium drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
+        <p className="text-xs sm:text-lg md:text-xl text-slate-100 max-w-3xl leading-relaxed mb-6 sm:mb-8 font-medium drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] px-2">
           The official authority portal for premier trekking in Nepal. Handcrafted Annapurna Base Camp (ABC) expeditions with certified Sherpa leaders, dedicated 1:1 porters, boutique mountain lodges, and direct VIP helicopter descents.
         </p>
 
         {/* Interactive Floating Quick-Booking Bar (Fishtail Tours Style) */}
         <form
           onSubmit={handleQuickSearch}
-          className="w-full max-w-5xl bg-white/95 backdrop-blur-2xl p-3 sm:p-5 rounded-3xl shadow-2xl border border-white/40 text-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center text-left mb-10"
+          className="w-full max-w-5xl bg-white/95 backdrop-blur-2xl p-3 sm:p-5 rounded-3xl shadow-2xl border border-white/40 text-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center text-left mb-8 sm:mb-10"
         >
           {/* Field 1: Expedition Tier */}
           <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-200">
@@ -213,7 +213,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           <div className="p-1 sm:p-0">
             <button
               type="submit"
-              className="w-full py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white shadow-xl shadow-sky-600/30 hover:shadow-sky-500/50 hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 sm:py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white shadow-xl shadow-sky-600/30 hover:shadow-sky-500/50 hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Check Rates & Book</span>
               <ArrowRight className="w-4 h-4" />
@@ -222,48 +222,48 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
         </form>
 
         {/* Social Proof & Trust Pillars Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl w-full text-left">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 max-w-5xl w-full text-left">
           {/* Trust 1 */}
-          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center shrink-0">
-              <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center shrink-0">
+              <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-400 text-amber-400" />
             </div>
-            <div>
-              <div className="text-xs sm:text-sm font-extrabold text-white">4.98 / 5 Rating</div>
-              <div className="text-[10px] text-slate-300">1,400+ Verified Trekkers</div>
+            <div className="min-w-0">
+              <div className="text-xs sm:text-sm font-extrabold text-white truncate">4.98 / 5 Rating</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-300 truncate">1,400+ Trekkers</div>
             </div>
           </div>
 
           {/* Trust 2 */}
-          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-5 h-5" />
+          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-xs sm:text-sm font-extrabold text-white">Official ACAP & TIMS</div>
-              <div className="text-[10px] text-slate-300">Govt. Certified Permits</div>
+            <div className="min-w-0">
+              <div className="text-xs sm:text-sm font-extrabold text-white truncate">ACAP & TIMS</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-300 truncate">Govt. Permits</div>
             </div>
           </div>
 
           {/* Trust 3 */}
-          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-400/40 text-sky-400 flex items-center justify-center shrink-0">
-              <HeartHandshake className="w-5 h-5" />
+          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sky-500/20 border border-sky-400/40 text-sky-400 flex items-center justify-center shrink-0">
+              <HeartHandshake className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-xs sm:text-sm font-extrabold text-white">1:1 Dedicated Porter</div>
-              <div className="text-[10px] text-slate-300">Ethical Sherpa Care</div>
+            <div className="min-w-0">
+              <div className="text-xs sm:text-sm font-extrabold text-white truncate">1:1 Porter</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-300 truncate">Ethical Care</div>
             </div>
           </div>
 
           {/* Trust 4 */}
-          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center shrink-0">
-              <Compass className="w-5 h-5" />
+          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="text-xs sm:text-sm font-extrabold text-white">VIP Heli Evacuation</div>
-              <div className="text-[10px] text-slate-300">25-Min Standby in Pokhara</div>
+            <div className="min-w-0">
+              <div className="text-xs sm:text-sm font-extrabold text-white truncate">VIP Heli Evac</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-300 truncate">25-Min Standby</div>
             </div>
           </div>
         </div>
