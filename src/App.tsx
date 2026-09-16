@@ -34,7 +34,6 @@ export const App: React.FC = () => {
   });
   const [modalPrice, setModalPrice] = useState<number>(2900);
 
-  // Ensure html has light class permanently
   useEffect(() => {
     document.documentElement.classList.add('light');
     document.documentElement.classList.remove('dark');
@@ -69,8 +68,8 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFD] text-slate-900 flex flex-col selection:bg-cyan-500/20 selection:text-sky-900">
-      {/* Floating HUD Navbar */}
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-amber-500 selection:text-white">
+      {/* Prestigious Luxury Navbar with Utility Bar */}
       <Navbar
         telemetry={telemetry}
         onOpenBooking={handleOpenBooking}
@@ -78,11 +77,8 @@ export const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 w-full overflow-hidden">
-        {/* Hero Section with Canvas & Live Telemetry */}
+        {/* Cinematic Hero Section with Quick-Booking Floating Bar */}
         <Hero onOpenBooking={handleOpenBooking} />
-
-        {/* Interactive Topographic Elevation Profile */}
-        <ElevationProfile />
 
         {/* 3-Star, 4-Star, 5-Star Tiers & Comparison Matrix */}
         <TierSelector
@@ -90,6 +86,9 @@ export const App: React.FC = () => {
           onSelectTier={handleSelectTier}
           onBookTier={handleBookTier}
         />
+
+        {/* Interactive Mountain Trail & Altitude Elevation Guide */}
+        <ElevationProfile />
 
         {/* Comprehensive Day-by-Day Itineraries */}
         <ItineraryTimeline
@@ -104,7 +103,7 @@ export const App: React.FC = () => {
           onOpenModalWithState={handleOpenModalWithState}
         />
 
-        {/* Expedition Safety, AMS Acclimatization & Interactive Gear Inventory */}
+        {/* Expedition Safety, Acclimatization Guidelines & Packing Checklist */}
         <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <AltitudeGuide />
           <GearChecklist />

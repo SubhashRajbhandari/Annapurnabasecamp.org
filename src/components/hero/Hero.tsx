@@ -1,139 +1,179 @@
-import React from 'react';
-import { MountainCanvas } from './MountainCanvas';
-import { ArrowRight, Compass, ShieldCheck, Sparkles, Navigation, CloudSnow, Wind, Zap } from 'lucide-react';
-import { LIVE_TELEMETRY_DATA } from '../../data/elevationRoute';
+import React, { useState } from 'react';
+import { Compass, Calendar, Users, ShieldCheck, ArrowRight, Star, HeartHandshake, ChevronDown } from 'lucide-react';
+import type { PackageTier } from '../../types/trek';
 
 interface HeroProps {
-  onOpenBooking: () => void;
+  onOpenBooking: (tier?: PackageTier) => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
+  const [selectedTier, setSelectedTier] = useState<PackageTier>('4-star');
+  const [selectedMonth, setSelectedMonth] = useState('October 2026 (Peak Autumn)');
+  const [partySize, setPartySize] = useState(2);
+
+  const handleQuickSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const bookingSection = document.getElementById('booking');
+    if (bookingSection) {
+      bookingSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      onOpenBooking(selectedTier);
+    }
+  };
+
   return (
-    <section className="relative min-h-[96vh] flex items-center justify-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Real Mountain Panorama Photographic Background */}
+    <section className="relative min-h-[92vh] flex flex-col justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white">
+      {/* Cinematic High-Resolution Mountain Panorama Background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 scale-105"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-1000"
         style={{ backgroundImage: `url('/images/hero-annapurna-white.jpg')` }}
       />
 
-      {/* Atmospheric Frosted Glass & Gradient Overlays - Seamless into white */}
-      <div className="absolute inset-0 backdrop-blur-[2px] bg-gradient-to-b from-white/85 via-white/65 to-[#F8FAFD]" />
+      {/* Warm Gradient Scrim - Clean, High Contrast for Supreme Legibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-900/40 to-slate-950/90 pointer-events-none" />
 
-      {/* 3D Topographic Wireframe & Snow Crystals Canvas */}
-      <MountainCanvas />
-
-      {/* Ambient Lighting Blurs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-sky-400/20 blur-[130px] rounded-full pointer-events-none" />
-
-      <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
-        {/* Futuristic Status Pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-mono tracking-wide mb-6 shadow-md backdrop-blur-xl border bg-white/95 border-sky-300 text-sky-900 shadow-sky-500/10">
-          <span className="w-2 h-2 rounded-full bg-sky-500 animate-ping" />
-          <span className="font-black tracking-wider">ANNAPURNABASECAMP.ORG</span>
-          <span className="text-slate-400">//</span>
-          <span className="font-bold text-sky-700">OFFICIAL EXPEDITION PORTAL</span>
+      {/* Main Content Container */}
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center my-auto">
+        {/* Top Authority Pill Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-semibold mb-6 backdrop-blur-md shadow-sm">
+          <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+          <span>Official Trekking Guidance & Luxury Booking Portal • 4,130m / 13,550ft</span>
         </div>
 
         {/* Main Headline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight max-w-5xl leading-[1.06] mb-6 drop-shadow-xs text-slate-950">
-          JOURNEY TO THE{' '}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-600 via-cyan-600 to-blue-700">
-            SACRED SANCTUARY
+        <h1 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white max-w-5xl leading-[1.14] mb-5 drop-shadow-[0_4px_20px_rgba(0,0,0,0.85)]">
+          Ascend to the Sacred{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-sky-300 to-cyan-200">
+            Annapurna Sanctuary
           </span>
         </h1>
 
         {/* Subtitle */}
-        <p className="max-w-2xl text-base sm:text-lg md:text-xl font-medium leading-relaxed mb-8 drop-shadow-2xs text-slate-700">
-          The official authority portal and luxury booking gateway for Annapurna Base Camp (4,130m). 
-          Choose your comfort tier from <span className="text-sky-700 font-extrabold">3-Star Explorer</span>, <span className="text-blue-700 font-extrabold">4-Star Premier</span>, to <span className="text-amber-700 font-extrabold">5-Star Royal Sanctuary</span> with dedicated 1:1 Sherpa porters and VIP helicopter descents.
+        <p className="text-sm sm:text-lg md:text-xl text-slate-100 max-w-3xl leading-relaxed mb-8 font-medium drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
+          Handcrafted Himalayan trekking journeys with certified Sherpa leaders, dedicated 1:1 porters, boutique mountain lodges, and direct VIP helicopter descents.
         </p>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-14 w-full sm:w-auto">
-          <button
-            onClick={onOpenBooking}
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-sm sm:text-base bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white shadow-xl shadow-sky-500/30 hover:shadow-sky-400/45 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 active:scale-95 tracking-wide"
-          >
-            <span>CONFIGURE & BOOK EXPEDITION</span>
-            <ArrowRight className="w-5 h-5" />
-          </button>
-
-          <a
-            href="#packages"
-            className="w-full sm:w-auto px-7 py-4 rounded-2xl font-bold text-sm sm:text-base border backdrop-blur-xl transition-all flex items-center justify-center gap-2.5 bg-white/95 hover:bg-white text-slate-900 border-sky-300 shadow-md hover:shadow-lg"
-          >
-            <Sparkles className="w-5 h-5 text-amber-500" />
-            <span>Explore 3★, 4★, 5★ Tiers</span>
-          </a>
-        </div>
-
-        {/* Cyber-Alpine Telemetry HUD Card */}
-        <div className="w-full max-w-5xl glass-panel hud-border rounded-3xl p-5 sm:p-7 text-left shadow-xl backdrop-blur-2xl bg-white/95 border border-sky-200">
-          <div className="flex items-center justify-between border-b border-sky-200/60 pb-3 mb-4 flex-wrap gap-2">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-widest uppercase text-sky-700">
-              <Navigation className="w-4 h-4 animate-spin text-sky-600" style={{ animationDuration: '10s' }} />
-              <span>REAL-TIME SANCTUARY TELEMETRY</span>
-            </div>
-            <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-700 font-extrabold">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>SATELLITE LINK: ACTIVE ({LIVE_TELEMETRY_DATA.satelliteConnection})</span>
+        {/* Interactive Floating Quick-Booking Bar (Fishtail Tours Style) */}
+        <form
+          onSubmit={handleQuickSearch}
+          className="w-full max-w-5xl bg-white/95 backdrop-blur-2xl p-3 sm:p-5 rounded-3xl shadow-2xl border border-white/40 text-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center text-left mb-10"
+        >
+          {/* Field 1: Expedition Tier */}
+          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-200">
+            <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-500 mb-0.5">
+              Service Tier
+            </label>
+            <div className="relative">
+              <select
+                value={selectedTier}
+                onChange={(e) => setSelectedTier(e.target.value as PackageTier)}
+                className="w-full text-xs sm:text-sm font-bold text-slate-900 focus:outline-none bg-transparent cursor-pointer appearance-none pr-6"
+              >
+                <option value="4-star">4★ Mountain Premier (1:1 Porter)</option>
+                <option value="5-star">5★ Sanctuary Luxury (VIP Heli)</option>
+                <option value="3-star">3★ Alpine Explorer (1:2 Porter)</option>
+              </select>
+              <ChevronDown className="w-4 h-4 text-slate-400 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 font-mono">
-            {/* Stat 1: Target Elevation */}
-            <div className="rounded-2xl p-4 border transition-all bg-white/95 border-sky-200 shadow-xs">
-              <div className="text-[11px] text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mb-1 font-semibold">
-                <Compass className="w-3.5 h-3.5 text-sky-600" />
-                <span>Target Elevation</span>
-              </div>
-              <div className="text-2xl sm:text-3xl font-black text-slate-950">4,130 m</div>
-              <div className="text-[10px] text-sky-700 font-extrabold">13,550 FT ALTITUDE</div>
-            </div>
-
-            {/* Stat 2: O2 Saturation */}
-            <div className="rounded-2xl p-4 border transition-all bg-white/95 border-amber-200 shadow-xs">
-              <div className="text-[11px] text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mb-1 font-semibold">
-                <Wind className="w-3.5 h-3.5 text-amber-500" />
-                <span>Summit O₂ Ratio</span>
-              </div>
-              <div className="text-2xl sm:text-3xl font-black text-amber-700">62.4 %</div>
-              <div className="text-[10px] text-slate-500 font-medium">Supplemental O2 Ready</div>
-            </div>
-
-            {/* Stat 3: Weather */}
-            <div className="rounded-2xl p-4 border transition-all bg-white/95 border-sky-200 shadow-xs">
-              <div className="text-[11px] text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mb-1 font-semibold">
-                <CloudSnow className="w-3.5 h-3.5 text-sky-600" />
-                <span>Current ABC Temp</span>
-              </div>
-              <div className="text-2xl sm:text-3xl font-black text-slate-950">{LIVE_TELEMETRY_DATA.currentTempAbc}</div>
-              <div className="text-[10px] text-sky-700 font-extrabold">{LIVE_TELEMETRY_DATA.windSpeedAbc}</div>
-            </div>
-
-            {/* Stat 4: Porter Ratio Support */}
-            <div className="rounded-2xl p-4 border transition-all bg-white/95 border-emerald-200 shadow-xs">
-              <div className="text-[11px] text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mb-1 font-semibold">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Porter Ratios</span>
-              </div>
-              <div className="text-2xl sm:text-3xl font-black text-emerald-700">1:1 or 1:2</div>
-              <div className="text-[10px] text-emerald-700 font-extrabold">Insured Alpine Porters</div>
+          {/* Field 2: Departure Season / Month */}
+          <div className="px-3 py-2 border-b sm:border-b-0 lg:border-r border-slate-200">
+            <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-500 mb-0.5 flex items-center gap-1">
+              <Calendar className="w-3 h-3 text-sky-600" />
+              <span>Expedition Window</span>
+            </label>
+            <div className="relative">
+              <select
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(e.target.value)}
+                className="w-full text-xs sm:text-sm font-bold text-slate-900 focus:outline-none bg-transparent cursor-pointer appearance-none pr-6"
+              >
+                <option value="October 2026 (Peak Autumn)">Oct - Nov 2026 (Autumn Clear Skies)</option>
+                <option value="April 2026 (Spring Blooms)">Mar - May 2026 (Rhododendron Season)</option>
+                <option value="December 2026 (Winter Snow)">Dec - Jan 2026 (Crisp Winter Snow)</option>
+                <option value="Custom 2027">2027 Advance Booking</option>
+              </select>
+              <ChevronDown className="w-4 h-4 text-slate-400 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
 
-          {/* Quick Feature Highlights row */}
-          <div className="mt-4 pt-3 border-t border-sky-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-700 font-sans">
-            <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-sky-600" />
-              <span>Full Permits Included: <strong className="text-slate-950 font-black">ACAP & TIMS</strong></span>
+          {/* Field 3: Group Size */}
+          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-200">
+            <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-500 mb-0.5 flex items-center gap-1">
+              <Users className="w-3 h-3 text-sky-600" />
+              <span>Group Size</span>
+            </label>
+            <div className="relative">
+              <select
+                value={partySize}
+                onChange={(e) => setPartySize(Number(e.target.value))}
+                className="w-full text-xs sm:text-sm font-bold text-slate-900 focus:outline-none bg-transparent cursor-pointer appearance-none pr-6"
+              >
+                <option value={1}>1 Solo Trekker (Private Guide)</option>
+                <option value={2}>2 Trekkers (Couple / Friends)</option>
+                <option value={4}>4 Trekkers (Small Group)</option>
+                <option value={6}>6+ Trekkers (Private Group)</option>
+              </select>
+              <ChevronDown className="w-4 h-4 text-slate-400 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-amber-500 font-black">★ 3 Tiers:</span>
-              <span className="font-medium">3★ Standard, 4★ Deluxe, 5★ Dwarika\'s & Pavilions</span>
+          </div>
+
+          {/* Action Search Button */}
+          <div className="p-1 sm:p-0">
+            <button
+              type="submit"
+              className="w-full py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white shadow-xl shadow-sky-600/30 hover:shadow-sky-500/50 hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>Check Rates & Book</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </form>
+
+        {/* Social Proof & Trust Pillars Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl w-full text-left">
+          {/* Trust 1 */}
+          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center shrink-0">
+              <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
             </div>
-            <div className="flex items-center gap-2 text-sky-700 font-mono font-bold">
-              <span>🚁 Airbus H125 Heli Flight Back Option</span>
+            <div>
+              <div className="text-xs sm:text-sm font-extrabold text-white">4.98 / 5 Rating</div>
+              <div className="text-[10px] text-slate-300">1,400+ Verified Trekkers</div>
+            </div>
+          </div>
+
+          {/* Trust 2 */}
+          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xs sm:text-sm font-extrabold text-white">Official ACAP & TIMS</div>
+              <div className="text-[10px] text-slate-300">Govt. Certified Permits</div>
+            </div>
+          </div>
+
+          {/* Trust 3 */}
+          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-400/40 text-sky-400 flex items-center justify-center shrink-0">
+              <HeartHandshake className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xs sm:text-sm font-extrabold text-white">1:1 Dedicated Porter</div>
+              <div className="text-[10px] text-slate-300">Ethical Sherpa Care</div>
+            </div>
+          </div>
+
+          {/* Trust 4 */}
+          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 sm:p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center shrink-0">
+              <Compass className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xs sm:text-sm font-extrabold text-white">VIP Heli Evacuation</div>
+              <div className="text-[10px] text-slate-300">25-Min Standby in Pokhara</div>
             </div>
           </div>
         </div>

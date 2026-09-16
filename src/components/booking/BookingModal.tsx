@@ -108,12 +108,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-white/95 backdrop-blur-2xl hud-border rounded-3xl p-6 sm:p-10 border border-sky-300 shadow-2xl shadow-sky-500/15 my-8 text-slate-900">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm overflow-y-auto animate-in fade-in">
+      <div className="relative w-full max-w-2xl bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-2xl my-8 text-slate-900 max-h-[92vh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-200 transition-all cursor-pointer"
+          className="absolute top-6 right-6 p-2.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
@@ -122,39 +122,39 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <div>
             {/* Modal Title */}
             <div className="mb-6">
-              <div className="text-xs font-mono text-sky-700 uppercase tracking-wider mb-1 flex items-center gap-1.5 font-bold">
-                <ShieldCheck className="w-4 h-4 text-sky-600" />
-                <span>OFFICIAL PERMIT & EXPEDITION REGISTRATION</span>
+              <div className="text-xs text-amber-700 uppercase tracking-wider mb-1 flex items-center gap-1.5 font-bold">
+                <ShieldCheck className="w-4 h-4 text-amber-600" />
+                <span>Official Government ACAP Permit & Registration</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-black text-slate-950">
-                RESERVE YOUR SANCTUARY TREK
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
+                Reserve Your Sanctuary Expedition
               </h3>
               <p className="text-slate-600 text-xs sm:text-sm mt-1">
-                Lock in your mountain guides, certified porters, and lodge permits for Annapurna Base Camp (4,130m).
+                Lock in your certified mountain guides, dedicated porters, and lodge permits for Annapurna Base Camp (4,130m).
               </p>
             </div>
 
             {/* Selected Summary Pill */}
-            <div className="bg-sky-50/90 border border-sky-200 rounded-2xl p-4 mb-6 font-mono text-xs grid grid-cols-2 sm:grid-cols-4 gap-3 shadow-xs">
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-xs grid grid-cols-2 sm:grid-cols-4 gap-3 shadow-xs">
               <div>
-                <span className="text-slate-500 block text-[10px]">TIER:</span>
-                <span className="text-slate-900 font-bold">{currentPkg.title} ({currentPkg.starRating}★)</span>
+                <span className="text-slate-500 block text-[11px] font-semibold">Service Tier:</span>
+                <span className="text-slate-900 font-extrabold">{currentPkg.title} ({currentPkg.starRating}★)</span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[10px]">PARTY:</span>
-                <span className="text-sky-700 font-bold flex items-center gap-1">
-                  <Users className="w-3 h-3 text-sky-600" /> {bookingData.groupSize} Trekkers
+                <span className="text-slate-500 block text-[11px] font-semibold">Trek Party:</span>
+                <span className="text-sky-700 font-extrabold flex items-center gap-1">
+                  <Users className="w-3.5 h-3.5 text-sky-600" /> {bookingData.groupSize} Trekkers
                 </span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[10px]">DEPARTURE:</span>
-                <span className="text-amber-700 font-bold flex items-center gap-1">
-                  <Calendar className="w-3 h-3 text-amber-500" /> {bookingData.startDate}
+                <span className="text-slate-500 block text-[11px] font-semibold">Start Date:</span>
+                <span className="text-amber-700 font-extrabold flex items-center gap-1">
+                  <Calendar className="w-3.5 h-3.5 text-amber-500" /> {bookingData.startDate}
                 </span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[10px]">QUOTE:</span>
-                <span className="text-emerald-700 font-bold">
+                <span className="text-slate-500 block text-[11px] font-semibold">Total Quote:</span>
+                <span className="text-emerald-700 font-black text-sm">
                   {bookingData.currency === 'USD' ? `$${totalPrice.toLocaleString()}` : `NPR ${totalPrice.toLocaleString()}`}
                 </span>
               </div>
@@ -162,90 +162,90 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
             {/* Error banner if submission failed */}
             {submitError && (
-              <div className="mb-4 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-mono flex items-center gap-2">
+              <div className="mb-4 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2.5">
                 <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
                 <span>{submitError}</span>
               </div>
             )}
 
             {/* Lead Trekker Details Form */}
-            <form onSubmit={handleSubmit} className="space-y-4 text-xs font-mono">
+            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-700 mb-1.5 uppercase font-bold">Lead Trekker Full Name *</label>
+                  <label className="block text-slate-800 mb-1.5 font-bold uppercase text-[11px]">Lead Trekker Full Name *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Johnathan Doe"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full bg-white border border-sky-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 shadow-xs"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 mb-1.5 uppercase font-bold">Email Address *</label>
+                  <label className="block text-slate-800 mb-1.5 font-bold uppercase text-[11px]">Email Address *</label>
                   <input
                     type="email"
                     required
                     placeholder="john@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-white border border-sky-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 shadow-xs"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-sm"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-700 mb-1.5 uppercase font-bold">WhatsApp / Phone Number *</label>
+                  <label className="block text-slate-800 mb-1.5 font-bold uppercase text-[11px]">WhatsApp / Phone Number *</label>
                   <input
                     type="tel"
                     required
                     placeholder="+1 (555) 000-0000"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-white border border-sky-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 shadow-xs"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 mb-1.5 uppercase font-bold">Nationality (For ACAP Permit) *</label>
+                  <label className="block text-slate-800 mb-1.5 font-bold uppercase text-[11px]">Nationality (For ACAP Permit) *</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. United States, Germany, Australia"
+                    placeholder="e.g. United States, Germany, India, Nepal"
                     value={nationality}
                     onChange={(e) => setNationality(e.target.value)}
-                    className="w-full bg-white border border-sky-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 shadow-xs"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-sm"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-700 mb-1.5 uppercase font-bold">Dietary & Accommodation Preferences</label>
+                <label className="block text-slate-800 mb-1.5 font-bold uppercase text-[11px]">Dietary & Meal Preferences</label>
                 <select
                   value={dietary}
                   onChange={(e) => setDietary(e.target.value)}
-                  className="w-full bg-white border border-sky-200 rounded-xl px-4 py-2.5 text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 shadow-xs"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-sm"
                 >
-                  <option value="Standard Himalayan Full Board">Standard Mountain Full Board (Dal Bhat, Pasta, Soups)</option>
+                  <option value="Standard Himalayan Full Board">Standard Himalayan Full Board (Dal Bhat, Pasta, Warm Soups)</option>
                   <option value="Vegetarian / Vegan">Strict Vegetarian / Plant-based</option>
                   <option value="Gluten-Free">Gluten-Free Mountain Meals</option>
                   <option value="High-Protein Gourmet">High-Protein Gourmet Athlete Nutrition</option>
                 </select>
               </div>
 
-              {/* Document Storage Uploads (Passports & Travel Insurance) */}
+              {/* Document Storage Uploads */}
               <div className="pt-2">
-                <div className="text-[11px] font-bold uppercase text-slate-700 mb-2 flex items-center justify-between">
+                <div className="text-xs font-bold uppercase text-slate-800 mb-2 flex items-center justify-between">
                   <span>Permit Documents (Optional at Checkout)</span>
-                  <span className="text-[10px] text-sky-700 font-normal">Stored in Supabase Storage</span>
+                  <span className="text-[11px] text-slate-500 font-normal">Can also be submitted via WhatsApp later</span>
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* Passport Upload */}
-                  <label className="relative border border-dashed border-sky-300 hover:border-sky-500 rounded-2xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-sky-50/50 hover:bg-sky-50/80">
+                  <label className="border border-dashed border-slate-300 hover:border-sky-500 rounded-2xl p-3.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-slate-50 hover:bg-sky-50/50">
                     <input
                       type="file"
                       accept="image/*,.pdf"
@@ -259,15 +259,15 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                       </div>
                     ) : (
                       <div className="flex flex-col items-center gap-1 text-slate-600">
-                        <UploadCloud className="w-4 h-4 text-sky-600" />
-                        <span className="font-semibold text-[11px]">Passport Copy Scan</span>
-                        <span className="text-[9px] text-slate-400">PDF, JPG, PNG up to 10MB</span>
+                        <UploadCloud className="w-5 h-5 text-sky-600" />
+                        <span className="font-bold text-xs text-slate-800">Passport Copy Scan</span>
+                        <span className="text-[10px] text-slate-400">PDF, JPG, PNG up to 10MB</span>
                       </div>
                     )}
                   </label>
 
                   {/* Travel Insurance Upload */}
-                  <label className="relative border border-dashed border-sky-300 hover:border-sky-500 rounded-2xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-sky-50/50 hover:bg-sky-50/80">
+                  <label className="border border-dashed border-slate-300 hover:border-sky-500 rounded-2xl p-3.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-slate-50 hover:bg-sky-50/50">
                     <input
                       type="file"
                       accept="image/*,.pdf"
@@ -281,106 +281,106 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                       </div>
                     ) : (
                       <div className="flex flex-col items-center gap-1 text-slate-600">
-                        <UploadCloud className="w-4 h-4 text-sky-600" />
-                        <span className="font-semibold text-[11px]">High-Altitude Insurance</span>
-                        <span className="text-[9px] text-slate-400">Medical evacuation cover to 5,000m</span>
+                        <UploadCloud className="w-5 h-5 text-sky-600" />
+                        <span className="font-bold text-xs text-slate-800">Travel Medical Insurance</span>
+                        <span className="text-[10px] text-slate-400">Coverage up to 5,000m</span>
                       </div>
                     )}
                   </label>
                 </div>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-3">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 rounded-xl font-bold text-sm tracking-wider uppercase bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white shadow-xl shadow-sky-500/25 hover:shadow-sky-400/40 hover:brightness-105 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full py-4 rounded-2xl font-extrabold text-sm uppercase tracking-wider bg-slate-900 text-white shadow-xl hover:bg-slate-800 active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>ALLOCATING ACAP PERMIT & RESERVATION...</span>
+                      <span>Confirming Sanctuary Reservation...</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>CONFIRM OFFICIAL SANCTUARY RESERVATION</span>
+                      <span>Confirm Official Sanctuary Reservation</span>
                     </>
                   )}
                 </button>
               </div>
 
-              <div className="text-[10px] text-slate-500 text-center font-sans">
+              <div className="text-[11px] text-slate-500 text-center">
                 🔒 Protected under the Annapurna Conservation Area Project (ACAP) ethical trekking code. Official permit pre-allocation guaranteed.
               </div>
             </form>
           </div>
         ) : (
           /* Confirmation State */
-          <div className="text-center py-6">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-600 flex items-center justify-center mx-auto mb-4 animate-bounce">
+          <div className="text-center py-6 space-y-4">
+            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto animate-bounce">
               <CheckCircle2 className="w-10 h-10" />
             </div>
 
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="px-3 py-1 rounded-full bg-sky-100 border border-sky-200 text-sky-800 text-xs font-mono font-bold">
-                EXPEDITION RESERVATION ACTIVE
+              <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
+                Expedition Reservation Assigned
               </span>
               {isMock ? (
-                <span className="px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-300 text-slate-600 text-[10px] font-mono flex items-center gap-1">
+                <span className="px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-300 text-slate-600 text-[10px] flex items-center gap-1 font-semibold">
                   <Database className="w-3 h-3" /> Demo Sandbox Mode
                 </span>
               ) : (
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-[10px] font-mono flex items-center gap-1">
-                  <Database className="w-3 h-3 text-emerald-600" /> Supabase Cloud Verified
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-[10px] flex items-center gap-1 font-semibold">
+                  <Database className="w-3 h-3 text-emerald-600" /> Supabase Database Verified
                 </span>
               )}
             </div>
 
-            <h3 className="text-3xl font-black text-slate-950 mt-1 mb-2">
-              WELCOME TO THE SANCTUARY, {fullName.toUpperCase()}!
+            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+              Namaste & Welcome, {fullName}!
             </h3>
-            <p className="text-slate-600 text-sm max-w-md mx-auto mb-6 font-sans">
+            <p className="text-slate-600 text-sm max-w-md mx-auto">
               Your registration has been officially assigned. Our senior expedition leader in Kathmandu & Pokhara has received your dossier.
             </p>
 
-            <div className="bg-sky-50/90 border border-sky-200 rounded-2xl p-6 text-left max-w-md mx-auto font-mono text-xs space-y-2.5 mb-8 shadow-xs">
-              <div className="flex justify-between border-b border-sky-100 pb-2">
-                <span className="text-slate-500">DISPATCH REF:</span>
-                <span className="text-sky-700 font-bold">{reservationCode}</span>
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-left max-w-md mx-auto text-xs space-y-2.5 shadow-xs">
+              <div className="flex justify-between border-b border-slate-200 pb-2">
+                <span className="text-slate-500">Dispatch Reference:</span>
+                <span className="text-slate-900 font-extrabold">{reservationCode}</span>
               </div>
-              <div className="flex justify-between border-b border-sky-100 pb-2">
-                <span className="text-slate-500">SELECTED TIER:</span>
+              <div className="flex justify-between border-b border-slate-200 pb-2">
+                <span className="text-slate-500">Selected Tier:</span>
                 <span className="text-slate-900 font-bold">{currentPkg.title} ({currentPkg.starRating}★)</span>
               </div>
-              <div className="flex justify-between border-b border-sky-100 pb-2">
-                <span className="text-slate-500">PORTER CONFIG:</span>
+              <div className="flex justify-between border-b border-slate-200 pb-2">
+                <span className="text-slate-500">Porter Service:</span>
                 <span className="text-emerald-700 font-bold">{bookingData.porterOption}</span>
               </div>
-              <div className="flex justify-between border-b border-sky-100 pb-2">
-                <span className="text-slate-500">EXPEDITION START:</span>
+              <div className="flex justify-between border-b border-slate-200 pb-2">
+                <span className="text-slate-500">Expedition Start:</span>
                 <span className="text-amber-700 font-bold">{bookingData.startDate}</span>
               </div>
-              <div className="flex justify-between border-b border-sky-100 pb-2">
-                <span className="text-slate-500">DOCUMENTS:</span>
-                <span className="text-slate-700 font-bold">
-                  {passportFile ? 'Passport Attached' : 'Pending Later Dispatch'}
+              <div className="flex justify-between border-b border-slate-200 pb-2">
+                <span className="text-slate-500">Documents:</span>
+                <span className="text-slate-800 font-semibold">
+                  {passportFile ? 'Passport Attached' : 'Submit via WhatsApp Later'}
                 </span>
               </div>
               <div className="flex justify-between pt-1">
-                <span className="text-slate-500">TOTAL QUOTE:</span>
-                <span className="text-sky-700 font-black text-base">
+                <span className="text-slate-500 font-semibold">Total Quote:</span>
+                <span className="text-slate-900 font-black text-base">
                   {bookingData.currency === 'USD' ? `$${totalPrice.toLocaleString()}` : `NPR ${totalPrice.toLocaleString()}`}
                 </span>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <button
                 onClick={() => {
                   alert(`Official Expedition Dossier for #${reservationCode} saved to your device!`);
                 }}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-sky-600 text-white font-bold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-sky-500 shadow-md transition-all cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-sky-600 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-sky-500 shadow-md transition cursor-pointer"
               >
                 <Download className="w-4 h-4" />
                 <span>Download Expedition Dossier PDF</span>
@@ -388,7 +388,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
               <button
                 onClick={onClose}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white border border-sky-200 text-slate-700 hover:text-slate-950 hover:bg-slate-50 font-bold text-xs font-mono uppercase transition-all shadow-xs cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase transition cursor-pointer"
               >
                 Return to Portal
               </button>

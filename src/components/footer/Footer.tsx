@@ -1,110 +1,115 @@
 import React from 'react';
-import { Mountain, PhoneCall, Mail, Radio, Heart } from 'lucide-react';
+import { Mountain, Phone, Mail, MessageSquare, ShieldCheck, MapPin, Heart } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="border-t border-sky-200 bg-slate-50 text-slate-600 font-mono text-xs pt-16 pb-12 px-4 sm:px-6 lg:px-8 transition-colors">
+    <footer className="bg-slate-900 text-slate-300 text-xs pt-16 pb-12 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Col 1: Brand & Authority */}
-          <div className="md:col-span-1 space-y-4">
+          <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white flex items-center justify-center shadow-sm">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-sky-500 via-blue-600 to-indigo-700 text-white flex items-center justify-center shadow-md">
                 <Mountain className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-slate-950 font-black text-base tracking-tight font-sans">
+                <div className="text-white font-black text-base tracking-tight">
                   ANNAPURNA BASE CAMP
                 </div>
-                <div className="text-[10px] text-sky-600 tracking-wider font-bold">
+                <div className="text-[10px] text-sky-400 tracking-wider font-bold uppercase">
                   ANNAPURNABASECAMP.ORG
                 </div>
               </div>
             </div>
-            <p className="text-slate-600 text-xs font-sans leading-relaxed">
+            <p className="text-slate-400 text-xs leading-relaxed">
               The official authority portal and luxury booking gateway for the Annapurna Sanctuary (4,130m / 13,550ft), Nepal Himalayas.
             </p>
-            <div className="flex items-center gap-2 text-[11px] text-emerald-600 font-bold">
-              <Radio className="w-3.5 h-3.5 animate-pulse" />
-              <span>ACAP & TIMS OFFICIAL AUTHORIZED</span>
+            <div className="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
+              <ShieldCheck className="w-4 h-4" />
+              <span>ACAP & TIMS Government Authorized</span>
             </div>
           </div>
 
           {/* Col 2: Expedition Tiers */}
           <div>
-            <h4 className="text-slate-900 font-bold uppercase tracking-wider mb-4 flex items-center gap-1.5">
-              <span>Expedition Tiers</span>
+            <h4 className="text-white font-bold uppercase tracking-wider mb-4 text-xs">
+              Expedition Portfolios
             </h4>
-            <ul className="space-y-2.5 font-sans">
+            <ul className="space-y-2.5 text-xs text-slate-400">
               <li>
-                <a href="#packages" className="hover:text-sky-600 transition-colors">
-                  ★ 3-Star Alpine Explorer (Standard 1:2 Porter)
+                <a href="#packages" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-amber-400">★</span> 3-Star Alpine Explorer (1:2 Porter)
                 </a>
               </li>
               <li>
-                <a href="#packages" className="hover:text-sky-600 transition-colors">
-                  ★★ 4-Star Mountain Premier (Private 1:1 Porter)
+                <a href="#packages" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-amber-400">★★</span> 4-Star Mountain Premier (1:1 Dedicated)
                 </a>
               </li>
               <li>
-                <a href="#packages" className="hover:text-sky-600 transition-colors">
-                  ★★★ 5-Star Himalayan Sanctuary Luxury
+                <a href="#packages" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-amber-400">★★★</span> 5-Star Himalayan Sanctuary Luxury
                 </a>
               </li>
               <li>
-                <a href="#booking" className="hover:text-sky-600 transition-colors text-amber-600 font-semibold">
-                  🚁 Direct VIP Helicopter Descent Booking
+                <a href="#booking" className="hover:text-white text-amber-300 transition-colors flex items-center gap-1.5 font-semibold">
+                  <span>🚁 VIP Helicopter Return Flights</span>
                 </a>
               </li>
               <li>
-                <a href="#booking" className="hover:text-sky-600 transition-colors">
-                  Dynamic Price & Group Configurator
+                <a href="#elevation" className="hover:text-white transition-colors">
+                  Topographic Route & Altitude Profile
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Sanctuary Protocols */}
+          {/* Col 3: Sanctuary Regulations & Ethics */}
           <div>
-            <h4 className="text-slate-900 font-bold uppercase tracking-wider mb-4">
-              Sanctuary Regulations
+            <h4 className="text-white font-bold uppercase tracking-wider mb-4 text-xs">
+              Sanctuary Regulations & Ethics
             </h4>
-            <ul className="space-y-2 font-sans text-xs text-slate-600">
+            <ul className="space-y-2 text-xs text-slate-400">
               <li>• ACAP Conservation Permit mandatory</li>
               <li>• Single-use plastic bottles banned beyond Chhomrong</li>
               <li>• Mt. Machapuchare (6,993m) is sacred & strictly unclimbed</li>
-              <li>• Porters insured to standard 1:2 and 1:1 labor codes</li>
-              <li>• Gamow hyperbaric protocol for high-altitude safety</li>
+              <li>• Porter welfare code strictly enforced (1:1 & 1:2 ratios)</li>
+              <li>• Wilderness Medical Society AMS emergency protocols</li>
             </ul>
           </div>
 
-          {/* Col 4: Dispatch & Emergency */}
+          {/* Col 4: Dispatch Command & Contacts */}
           <div className="space-y-3">
-            <h4 className="text-slate-900 font-bold uppercase tracking-wider mb-2">
-              Expedition Command
+            <h4 className="text-white font-bold uppercase tracking-wider mb-2 text-xs">
+              Expedition Command & Support
             </h4>
-            <div className="bg-white p-4 rounded-2xl border border-sky-200 space-y-2 text-xs shadow-xs">
-              <div className="flex items-center gap-2 text-slate-900 font-semibold">
-                <PhoneCall className="w-3.5 h-3.5 text-sky-600" />
+            <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700 space-y-2.5 text-xs">
+              <div className="flex items-center gap-2 text-white font-medium">
+                <Phone className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                 <span>+977 (01) 4700-ABC (KTM HQ)</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-900 font-semibold">
-                <Mail className="w-3.5 h-3.5 text-sky-600" />
+              <div className="flex items-center gap-2 text-white font-medium">
+                <MessageSquare className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>+977 9841-ABC-TREK (WhatsApp)</span>
+              </div>
+              <div className="flex items-center gap-2 text-white font-medium">
+                <Mail className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                 <span>expedition@annapurnabasecamp.org</span>
               </div>
-              <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-100">
-                Dispatch Base: Lakeside Pokhara & Thamel Kathmandu
+              <div className="flex items-center gap-2 text-slate-400 pt-1 border-t border-slate-700 text-[11px]">
+                <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
+                <span>Lakeside Pokhara & Thamel Kathmandu</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom copyright line */}
-        <div className="pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
           <div>
             © {new Date().getFullYear()} Annapurnabasecamp.org — All Rights Reserved. Official Expedition Portal.
           </div>
-          <div className="flex items-center gap-1 text-slate-600 font-medium">
+          <div className="flex items-center gap-1.5 text-slate-400 font-medium">
             <span>Crafted for Himalayan Explorers with</span>
             <Heart className="w-3 h-3 text-red-500 fill-red-500 inline" />
             <span>in Nepal</span>
