@@ -14,42 +14,68 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
   const [isMuted, setIsMuted] = useState(true);
   const [isVideoReady, setIsVideoReady] = useState(false);
 
+  const heroSectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const START_TIME = 95; // 1:35 in seconds (95s)
+  const userPausedRef = useRef<boolean>(false);
 
   useEffect(() => {
+    // Detect reduced motion preference or very low-spec hardware (<= 2 CPU threads)
+    if (typeof window !== 'undefined') {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isLowCpu = typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 2;
+      if (prefersReducedMotion || isLowCpu) {
+        setIsPlaying(false);
+        userPausedRef.current = true;
+        return;
+      }
+    }
+
     const video = videoRef.current;
     if (!video) return;
 
     const startPlayback = () => {
-      if (video.currentTime < START_TIME) {
-        video.currentTime = START_TIME;
-      }
+      if (userPausedRef.current) return;
       video.play().then(() => {
         setIsPlaying(true);
         setIsVideoReady(true);
-      }).catch(() => setIsPlaying(false));
+      }).catch(() => {
+        setIsPlaying(false);
+      });
     };
 
     if (video.readyState >= 2) {
       startPlayback();
     }
 
-    const onLoaded = () => startPlayback();
     const onPlaying = () => setIsVideoReady(true);
-    const onEnded = () => {
-      video.currentTime = START_TIME;
-      video.play().catch(() => {});
-    };
-
-    video.addEventListener('loadedmetadata', onLoaded);
     video.addEventListener('playing', onPlaying);
-    video.addEventListener('ended', onEnded);
+
+    // Pause video when scrolled out of view to preserve 100% CPU/GPU on low-end PCs
+    const section = heroSectionRef.current;
+    let observer: IntersectionObserver | null = null;
+    if (section && 'IntersectionObserver' in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (entry.isIntersecting) {
+            if (!userPausedRef.current && video.paused) {
+              video.play().then(() => setIsPlaying(true)).catch(() => {});
+            }
+          } else {
+            if (!video.paused) {
+              video.pause();
+              setIsPlaying(false);
+            }
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(section);
+    }
 
     return () => {
-      video.removeEventListener('loadedmetadata', onLoaded);
       video.removeEventListener('playing', onPlaying);
-      video.removeEventListener('ended', onEnded);
+      if (observer) observer.disconnect();
     };
   }, []);
 
@@ -57,11 +83,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
-      if (video.currentTime < START_TIME) {
-        video.currentTime = START_TIME;
-      }
+      userPausedRef.current = false;
       video.play().then(() => setIsPlaying(true)).catch(() => {});
     } else {
+      userPausedRef.current = true;
       video.pause();
       setIsPlaying(false);
     }
@@ -85,37 +110,34 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
   };
 
   return (
-    <section className="relative min-h-[92vh] flex flex-col justify-center pt-20 sm:pt-24 pb-14 sm:pb-16 px-3 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white w-full max-w-full">
-      {/* Cinematic High-Resolution Mountain Video Background (Starts at 1:35 and loops) */}
+    <section
+      ref={heroSectionRef}
+      className="relative min-h-[92vh] flex flex-col justify-center pt-20 sm:pt-24 pb-14 sm:pb-16 px-3 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white w-full max-w-full"
+    >
+      {/* Cinematic High-Resolution Mountain Video Background (Hardware Accelerated, Faststart 60 FPS) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Fallback clean mountain image while video loads */}
+        {/* Fallback clean mountain image while video loads or in low-power mode */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-all duration-1000"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
           style={{ backgroundImage: `url('/images/hero-annapurna-white.jpg')` }}
         />
-        {/* Ambient Trekking Video with Smooth Fade-In */}
+        {/* Ambient Trekking Video with Zero-Copy Hardware Compositing */}
         <video
           ref={videoRef}
-          className={`absolute inset-0 w-full h-full object-cover scale-105 transition-opacity duration-1000 ${
-            isVideoReady ? 'opacity-100' : 'opacity-0'
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 transform-gpu ${
+            isVideoReady && isPlaying ? 'opacity-100' : 'opacity-0'
           }`}
+          style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
           poster="/images/hero-annapurna-white.jpg"
           autoPlay
           muted
+          loop
           playsInline
-          preload="auto"
+          preload="metadata"
           onPlaying={() => setIsVideoReady(true)}
-          onLoadedMetadata={(e) => {
-            e.currentTarget.currentTime = START_TIME;
-            e.currentTarget.play().catch(() => {});
-          }}
-          onEnded={(e) => {
-            e.currentTarget.currentTime = START_TIME;
-            e.currentTarget.play().catch(() => {});
-          }}
         >
+          <source src="/videos/nepal-annapurna-trek-optimized.mp4" type="video/mp4" />
           <source src="/videos/nepal-annapurna-trek.mp4" type="video/mp4" />
-          <source src="/Nepal - Annapurna Base Camp Trek.mp4" type="video/mp4" />
         </video>
       </div>
 
@@ -125,7 +147,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
       {/* Main Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center my-auto">
         {/* Top Authority Pill Badge */}
-        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[10px] sm:text-sm font-semibold mb-4 sm:mb-6 backdrop-blur-md shadow-sm max-w-full">
+        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-slate-950/75 border border-amber-400/40 text-amber-300 text-[10px] sm:text-sm font-semibold mb-4 sm:mb-6 shadow-sm max-w-full">
           <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
           <span className="truncate">Official Trekking Guidance & Luxury Portal • 4,130m / 13,550ft</span>
         </div>
@@ -146,7 +168,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
         {/* Interactive Floating Quick-Booking Bar (Fishtail Tours Style) */}
         <form
           onSubmit={handleQuickSearch}
-          className="w-full max-w-5xl bg-white/95 backdrop-blur-2xl p-3 sm:p-5 rounded-3xl shadow-2xl border border-white/40 text-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center text-left mb-8 sm:mb-10"
+          className="w-full max-w-5xl bg-white/98 sm:bg-white p-3 sm:p-5 rounded-3xl shadow-2xl border border-white/60 text-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center text-left mb-8 sm:mb-10"
         >
           {/* Field 1: Expedition Tier */}
           <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-200">
@@ -221,10 +243,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           </div>
         </form>
 
-        {/* Social Proof & Trust Pillars Grid */}
+        {/* Social Proof & Trust Pillars Grid (Zero-blur GPU fast path) */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 max-w-5xl w-full text-left">
           {/* Trust 1 */}
-          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <div className="bg-slate-950/80 border border-white/15 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0 shadow-lg">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-400 flex items-center justify-center shrink-0">
               <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-400 text-amber-400" />
             </div>
@@ -235,7 +257,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           </div>
 
           {/* Trust 2 */}
-          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <div className="bg-slate-950/80 border border-white/15 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0 shadow-lg">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center shrink-0">
               <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
@@ -246,7 +268,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           </div>
 
           {/* Trust 3 */}
-          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <div className="bg-slate-950/80 border border-white/15 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0 shadow-lg">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sky-500/20 border border-sky-400/40 text-sky-400 flex items-center justify-center shrink-0">
               <HeartHandshake className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
@@ -257,7 +279,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           </div>
 
           {/* Trust 4 */}
-          <div className="bg-slate-950/60 backdrop-blur-md border border-white/10 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <div className="bg-slate-950/80 border border-white/15 rounded-2xl p-2.5 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-w-0 shadow-lg">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 flex items-center justify-center shrink-0">
               <Compass className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
@@ -270,17 +292,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
       </div>
 
       {/* Floating Ambient Video Control Pill */}
-      <div className="absolute bottom-3 right-4 sm:bottom-5 sm:right-6 z-20 flex items-center gap-2.5 bg-slate-950/75 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full text-xs text-white shadow-xl pointer-events-auto">
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <div className="absolute bottom-3 right-4 sm:bottom-5 sm:right-6 z-20 flex items-center gap-2.5 bg-slate-950/85 border border-white/20 px-3.5 py-1.5 rounded-full text-xs text-white shadow-xl pointer-events-auto">
+        <span className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
         <span className="hidden sm:inline text-[11px] font-semibold tracking-wide text-slate-200">
-          Annapurna Sanctuary 4K (1:35 Loop)
+          {isPlaying ? 'Sanctuary 4K • 60 FPS' : 'Photo Mode (Low Power)'}
         </span>
         <button
           type="button"
           onClick={togglePlay}
           aria-label={isPlaying ? 'Pause video' : 'Play video'}
           className="p-1 rounded-full hover:bg-white/20 transition-colors cursor-pointer text-slate-200 hover:text-white"
-          title={isPlaying ? 'Pause' : 'Play'}
+          title={isPlaying ? 'Pause Video (Show High-Res Photo)' : 'Play Ambient Video'}
         >
           {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
         </button>
