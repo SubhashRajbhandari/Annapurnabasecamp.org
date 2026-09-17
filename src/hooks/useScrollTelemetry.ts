@@ -23,9 +23,13 @@ export function useScrollTelemetry(): ScrollTelemetry {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? Math.min(Math.max(scrollY / docHeight, 0), 1) : 0;
+      const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      const docHeight = Math.max(
+        document.documentElement.scrollHeight - window.innerHeight,
+        document.body.scrollHeight - window.innerHeight,
+        1
+      );
+      const progress = Math.min(Math.max(scrollY / docHeight, 0), 1);
 
       // Virtual altitude from 822m (Pokhara) to 4130m (ABC)
       const minAlt = 822;
@@ -50,7 +54,7 @@ export function useScrollTelemetry(): ScrollTelemetry {
         virtualAltitudeFeet: virtualFeet,
         oxygenPercentage: o2,
         currentWaypoint,
-        isScrolled: scrollY > 60,
+        isScrolled: scrollY > 30,
       });
     };
 

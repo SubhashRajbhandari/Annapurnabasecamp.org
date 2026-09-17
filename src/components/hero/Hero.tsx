@@ -17,6 +17,24 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
   const heroSectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPausedRef = useRef<boolean>(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (window.scrollY < 1200) {
+            setScrollY(window.scrollY);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -118,8 +136,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
       ref={heroSectionRef}
       className="relative min-h-[92vh] flex flex-col justify-center pt-20 sm:pt-24 pb-14 sm:pb-16 px-3 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white w-full max-w-full"
     >
-      {/* Cinematic High-Resolution Mountain Video Background (Hardware Accelerated, Faststart 60 FPS) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Cinematic High-Resolution Mountain Video Background with Parallax Glide */}
+      <div 
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+        style={{ transform: `translate3d(0, ${scrollY * 0.28}px, 0)`, willChange: 'transform' }}
+      >
         {/* Fallback clean mountain image while video loads */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
@@ -147,8 +168,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
       {/* Warm Gradient Scrim - Clean, High Contrast for Supreme Legibility */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/75 via-slate-900/45 to-slate-950/90 pointer-events-none" />
 
-      {/* Main Content Container */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center my-auto">
+      {/* Main Content Container with Parallax Elevation */}
+      <div 
+        className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center my-auto transition-transform duration-75"
+        style={{ 
+          transform: `translate3d(0, -${scrollY * 0.1}px, 0)`,
+          opacity: Math.max(0, 1 - scrollY / 650),
+          willChange: 'transform, opacity'
+        }}
+      >
         {/* Top Authority Pill Badge */}
         <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-slate-950/75 border border-amber-400/40 text-amber-300 text-[10px] sm:text-sm font-semibold mb-4 sm:mb-6 shadow-sm max-w-full">
           <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
@@ -291,6 +319,19 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
               <div className="text-[9px] sm:text-[10px] text-slate-300 truncate">25-Min Standby</div>
             </div>
           </div>
+        </div>
+
+        {/* Animated Scroll Down Indicator */}
+        <div className={`mt-6 sm:mt-8 transition-opacity duration-300 ${scrollY > 60 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          <a
+            href="#packages"
+            className="inline-flex flex-col items-center gap-1.5 text-[10px] sm:text-[11px] font-extrabold tracking-widest uppercase text-slate-300/80 hover:text-white transition-colors"
+          >
+            <span>Scroll to Explore Expedition</span>
+            <div className="w-5 h-8 rounded-full border-2 border-slate-400/60 flex items-start justify-center p-1 shadow-md">
+              <div className="w-1.5 h-2 rounded-full bg-sky-400 animate-bounce" />
+            </div>
+          </a>
         </div>
       </div>
 
