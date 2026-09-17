@@ -10,8 +10,13 @@ export default defineConfig({
   ],
   server: {
     host: true,
+    allowedHosts: true,
     watch: {
       ignored: ['**/*.mp4'],
     },
+  },
+  preview: {
+    host: true,
+    allowedHosts: true,
   },
 })
