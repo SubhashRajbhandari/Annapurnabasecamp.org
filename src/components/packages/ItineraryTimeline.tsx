@@ -235,9 +235,10 @@ export const ItineraryTimeline: React.FC<ItineraryTimelineProps> = ({
             {activeDay.day === 7 && (
               <div className="relative h-56 sm:h-72 rounded-3xl overflow-hidden mb-6 shadow-md border border-slate-200">
                 <img
-                  src="/images/abc-sanctuary.jpg"
+                  src="/images/abc-sanctuary.webp"
                   alt="Annapurna Base Camp Sanctuary Cirque"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/20" />
                 <div className="absolute bottom-4 left-5 right-5 flex items-center justify-between text-white">

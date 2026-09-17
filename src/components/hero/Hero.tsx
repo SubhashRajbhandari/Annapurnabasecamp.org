@@ -123,7 +123,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
         {/* Fallback clean mountain image while video loads */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
-          style={{ backgroundImage: `url('/images/hero-annapurna-white.jpg')` }}
+          style={{ backgroundImage: `url('/images/hero-annapurna-white.webp')` }}
         />
         {/* Ambient Trekking Video with Zero-Copy Hardware Compositing */}
         <video
@@ -132,7 +132,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
             isVideoReady ? 'opacity-100' : 'opacity-0'
           }`}
           style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
-          poster="/images/hero-annapurna-white.jpg"
+          poster="/images/hero-annapurna-white.webp"
           autoPlay
           muted
           loop
