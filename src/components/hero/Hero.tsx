@@ -19,27 +19,20 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
   const userPausedRef = useRef<boolean>(false);
 
   useEffect(() => {
-    // Detect reduced motion preference or very low-spec hardware (<= 2 CPU threads)
-    if (typeof window !== 'undefined') {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const isLowCpu = typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 2;
-      if (prefersReducedMotion || isLowCpu) {
-        setIsPlaying(false);
-        userPausedRef.current = true;
-        return;
-      }
-    }
-
     const video = videoRef.current;
     if (!video) return;
+
+    // Explicitly set DOM muted properties so browsers allow instant autoplay
+    video.defaultMuted = true;
+    video.muted = true;
 
     const startPlayback = () => {
       if (userPausedRef.current) return;
       video.play().then(() => {
         setIsPlaying(true);
         setIsVideoReady(true);
-      }).catch(() => {
-        setIsPlaying(false);
+      }).catch((err) => {
+        console.warn('Autoplay waiting for interaction:', err);
       });
     };
 
@@ -47,7 +40,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
       startPlayback();
     }
 
-    const onPlaying = () => setIsVideoReady(true);
+    const onPlaying = () => {
+      setIsPlaying(true);
+      setIsVideoReady(true);
+    };
+
+    video.addEventListener('loadeddata', startPlayback);
+    video.addEventListener('canplay', startPlayback);
     video.addEventListener('playing', onPlaying);
 
     // Pause video when scrolled out of view to preserve 100% CPU/GPU on low-end PCs
@@ -74,6 +73,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
     }
 
     return () => {
+      video.removeEventListener('loadeddata', startPlayback);
+      video.removeEventListener('canplay', startPlayback);
       video.removeEventListener('playing', onPlaying);
       if (observer) observer.disconnect();
     };
@@ -84,7 +85,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
     if (!video) return;
     if (video.paused) {
       userPausedRef.current = false;
-      video.play().then(() => setIsPlaying(true)).catch(() => {});
+      video.play().then(() => {
+        setIsPlaying(true);
+        setIsVideoReady(true);
+      }).catch(() => {});
     } else {
       userPausedRef.current = true;
       video.pause();
@@ -116,7 +120,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
     >
       {/* Cinematic High-Resolution Mountain Video Background (Hardware Accelerated, Faststart 60 FPS) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Fallback clean mountain image while video loads or in low-power mode */}
+        {/* Fallback clean mountain image while video loads */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
           style={{ backgroundImage: `url('/images/hero-annapurna-white.jpg')` }}
@@ -124,8 +128,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
         {/* Ambient Trekking Video with Zero-Copy Hardware Compositing */}
         <video
           ref={videoRef}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 transform-gpu ${
-            isVideoReady && isPlaying ? 'opacity-100' : 'opacity-0'
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 transform-gpu ${
+            isVideoReady ? 'opacity-100' : 'opacity-0'
           }`}
           style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
           poster="/images/hero-annapurna-white.jpg"
@@ -133,8 +137,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           muted
           loop
           playsInline
-          preload="metadata"
-          onPlaying={() => setIsVideoReady(true)}
+          preload="auto"
         >
           <source src="/videos/nepal-annapurna-trek-optimized.mp4" type="video/mp4" />
           <source src="/videos/nepal-annapurna-trek.mp4" type="video/mp4" />
