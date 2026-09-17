@@ -4,6 +4,7 @@ import { Navbar } from './components/navbar/Navbar';
 import { Hero } from './components/hero/Hero';
 import { ElevationProfile } from './components/elevation/ElevationProfile';
 import { TierSelector } from './components/packages/TierSelector';
+import { FieldGuides } from './components/guides/FieldGuides';
 import { ItineraryTimeline } from './components/packages/ItineraryTimeline';
 import { BookingEngine } from './components/booking/BookingEngine';
 import { BookingModal } from './components/booking/BookingModal';
@@ -88,6 +89,9 @@ export const App: React.FC = () => {
           onSelectTier={handleSelectTier}
           onBookTier={handleBookTier}
         />
+
+        {/* High-Authority Himalayan Field Guides & Organic Search Knowledge Hub */}
+        <FieldGuides />
 
         {/* Interactive Mountain Trail & Altitude Elevation Guide */}
         <ElevationProfile />

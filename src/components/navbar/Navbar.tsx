@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mountain, Phone, Mail, MessageSquare, ShieldCheck, Compass, Sparkles, Calendar, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Mountain, Phone, Mail, MessageSquare, ShieldCheck, Compass, Sparkles, Calendar, Menu, X, ArrowUpRight, BookOpen } from 'lucide-react';
 import type { ScrollTelemetry } from '../../hooks/useScrollTelemetry';
 
 interface NavbarProps {
@@ -92,6 +92,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               Expedition Tiers
             </a>
             <a
+              href="#guides"
+              className="px-3 py-2 rounded-xl hover:text-slate-950 hover:bg-slate-100/80 transition-all whitespace-nowrap"
+            >
+              Field Guides
+            </a>
+            <a
               href="#elevation"
               className="px-3 py-2 rounded-xl hover:text-slate-950 hover:bg-slate-100/80 transition-all whitespace-nowrap"
             >
@@ -165,6 +171,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="py-2.5 px-3 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-900 font-semibold"
             >
               <Sparkles className="w-4 h-4 text-amber-500" /> Expedition Tiers (3★, 4★, 5★)
+            </a>
+            <a 
+              href="#guides" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2.5 px-3 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-900 font-semibold"
+            >
+              <BookOpen className="w-4 h-4 text-sky-600" /> Expedition Field Guides & Knowledge Hub
             </a>
             <a 
               href="#elevation" 

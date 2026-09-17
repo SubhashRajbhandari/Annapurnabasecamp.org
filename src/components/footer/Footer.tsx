@@ -69,17 +69,43 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Sanctuary Regulations & Ethics */}
+          {/* Col 3: Expedition Field Guides & Knowledge */}
           <div>
             <h4 className="text-white font-bold uppercase tracking-wider mb-4 text-xs">
-              Sanctuary Regulations & Ethics
+              Expedition Field Guides
             </h4>
-            <ul className="space-y-2 text-xs text-slate-400">
-              <li>• ACAP Conservation Permit mandatory</li>
-              <li>• Single-use plastic bottles banned beyond Chhomrong</li>
-              <li>• Mt. Machapuchare (6,993m) is sacred & strictly unclimbed</li>
-              <li>• Porter welfare code strictly enforced (1:1 & 1:2 ratios)</li>
-              <li>• Wilderness Medical Society AMS emergency protocols</li>
+            <ul className="space-y-2.5 text-xs text-slate-400">
+              <li>
+                <a href="#guides" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-sky-400">📖</span> ABC Trek Cost &amp; Budget (2026/27)
+                </a>
+              </li>
+              <li>
+                <a href="#guides" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-sky-400">🌤️</span> Best Time &amp; Month-by-Month Weather
+                </a>
+              </li>
+              <li>
+                <a href="#guides" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-sky-400">⚖️</span> ABC vs EBC: Which Trek is Better?
+                </a>
+              </li>
+              <li>
+                <a href="#guides" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-sky-400">🏔️</span> Altitude Sickness (AMS) &amp; Diamox
+                </a>
+              </li>
+              <li>
+                <a href="#guides" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-sky-400">📋</span> ACAP &amp; TIMS Permits Guide
+                </a>
+              </li>
+              <li className="pt-2 text-[11px] text-slate-500 border-t border-slate-800/80">
+                <span>• Single-use plastic bottles banned past Chhomrong</span>
+              </li>
+              <li className="text-[11px] text-slate-500">
+                <span>• Mt. Machapuchare (6,993m) is sacred &amp; unclimbed</span>
+              </li>
             </ul>
           </div>
 
