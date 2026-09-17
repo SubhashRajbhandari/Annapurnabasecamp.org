@@ -168,14 +168,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           The official authority portal for premier trekking in Nepal. Handcrafted Annapurna Base Camp (ABC) expeditions with certified Sherpa leaders, dedicated 1:1 porters, boutique mountain lodges, and direct VIP helicopter descents.
         </p>
 
-        {/* Interactive Floating Quick-Booking Bar (Fishtail Tours Style) */}
+        {/* Interactive Floating Quick-Booking Bar (Fishtail Tours Style) - Translucent Frosted Glass */}
         <form
           onSubmit={handleQuickSearch}
-          className="w-full max-w-5xl bg-white/98 sm:bg-white p-3 sm:p-5 rounded-3xl shadow-2xl border border-white/60 text-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center text-left mb-8 sm:mb-10"
+          className="w-full max-w-5xl bg-white/80 sm:bg-white/85 backdrop-blur-md p-3 sm:p-5 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/70 text-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center text-left mb-8 sm:mb-10 hover:bg-white/90 transition-all duration-300"
         >
           {/* Field 1: Expedition Tier */}
-          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-200">
-            <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-500 mb-0.5">
+          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-300/70 bg-white/40 sm:bg-transparent rounded-2xl sm:rounded-none">
+            <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-600 mb-0.5">
               Service Tier
             </label>
             <div className="relative">
@@ -184,17 +184,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                 onChange={(e) => setSelectedTier(e.target.value as PackageTier)}
                 className="w-full text-xs sm:text-sm font-bold text-slate-900 focus:outline-none bg-transparent cursor-pointer appearance-none pr-6"
               >
-                <option value="4-star">4★ Mountain Premier (1:1 Porter)</option>
-                <option value="5-star">5★ Sanctuary Luxury (VIP Heli)</option>
-                <option value="3-star">3★ Alpine Explorer (1:2 Porter)</option>
+                <option value="4-star" className="bg-white text-slate-900">4★ Mountain Premier (1:1 Porter)</option>
+                <option value="5-star" className="bg-white text-slate-900">5★ Sanctuary Luxury (VIP Heli)</option>
+                <option value="3-star" className="bg-white text-slate-900">3★ Alpine Explorer (1:2 Porter)</option>
               </select>
-              <ChevronDown className="w-4 h-4 text-slate-400 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-4 h-4 text-slate-500 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
 
           {/* Field 2: Departure Season / Month */}
-          <div className="px-3 py-2 border-b sm:border-b-0 lg:border-r border-slate-200">
-            <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-500 mb-0.5 flex items-center gap-1">
+          <div className="px-3 py-2 border-b sm:border-b-0 lg:border-r border-slate-300/70 bg-white/40 sm:bg-transparent rounded-2xl sm:rounded-none">
+            <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-600 mb-0.5 flex items-center gap-1">
               <Calendar className="w-3 h-3 text-sky-600" />
               <span>Expedition Window</span>
             </label>
@@ -204,18 +204,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                 onChange={(e) => setSelectedMonth(e.target.value)}
                 className="w-full text-xs sm:text-sm font-bold text-slate-900 focus:outline-none bg-transparent cursor-pointer appearance-none pr-6"
               >
-                <option value="October 2026 (Peak Autumn)">Oct - Nov 2026 (Autumn Clear Skies)</option>
-                <option value="April 2026 (Spring Blooms)">Mar - May 2026 (Rhododendron Season)</option>
-                <option value="December 2026 (Winter Snow)">Dec - Jan 2026 (Crisp Winter Snow)</option>
-                <option value="Custom 2027">2027 Advance Booking</option>
+                <option value="October 2026 (Peak Autumn)" className="bg-white text-slate-900">Oct - Nov 2026 (Autumn Clear Skies)</option>
+                <option value="April 2026 (Spring Blooms)" className="bg-white text-slate-900">Mar - May 2026 (Rhododendron Season)</option>
+                <option value="December 2026 (Winter Snow)" className="bg-white text-slate-900">Dec - Jan 2026 (Crisp Winter Snow)</option>
+                <option value="Custom 2027" className="bg-white text-slate-900">2027 Advance Booking</option>
               </select>
-              <ChevronDown className="w-4 h-4 text-slate-400 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-4 h-4 text-slate-500 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
 
           {/* Field 3: Group Size */}
-          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-200">
-            <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-500 mb-0.5 flex items-center gap-1">
+          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-300/70 bg-white/40 sm:bg-transparent rounded-2xl sm:rounded-none">
+            <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-600 mb-0.5 flex items-center gap-1">
               <Users className="w-3 h-3 text-sky-600" />
               <span>Group Size</span>
             </label>
@@ -225,12 +225,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                 onChange={(e) => setPartySize(Number(e.target.value))}
                 className="w-full text-xs sm:text-sm font-bold text-slate-900 focus:outline-none bg-transparent cursor-pointer appearance-none pr-6"
               >
-                <option value={1}>1 Solo Trekker (Private Guide)</option>
-                <option value={2}>2 Trekkers (Couple / Friends)</option>
-                <option value={4}>4 Trekkers (Small Group)</option>
-                <option value={6}>6+ Trekkers (Private Group)</option>
+                <option value={1} className="bg-white text-slate-900">1 Solo Trekker (Private Guide)</option>
+                <option value={2} className="bg-white text-slate-900">2 Trekkers (Couple / Friends)</option>
+                <option value={4} className="bg-white text-slate-900">4 Trekkers (Small Group)</option>
+                <option value={6} className="bg-white text-slate-900">6+ Trekkers (Private Group)</option>
               </select>
-              <ChevronDown className="w-4 h-4 text-slate-400 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-4 h-4 text-slate-500 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
 

@@ -48,10 +48,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="hidden xs:inline">WhatsApp Dispatch</span>
               <span className="xs:hidden">WhatsApp</span>
             </a>
-            <div className="hidden sm:flex items-center gap-1.5 text-slate-400 shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Sanctuary Trails Open (4,130m)</span>
-            </div>
+            {telemetry.isScrolled ? (
+              <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[10px] sm:text-xs font-bold animate-in fade-in shrink-0">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                <span>▲ {telemetry.virtualAltitude.toLocaleString()}m ({telemetry.virtualAltitudeFeet.toLocaleString()}ft)</span>
+                <span className="hidden md:inline text-slate-400">• {telemetry.currentWaypoint.name}</span>
+                <span className="hidden lg:inline text-emerald-400 font-normal">({telemetry.oxygenPercentage}% O₂)</span>
+              </div>
+            ) : (
+              <div className="hidden sm:flex items-center gap-1.5 text-slate-400 shrink-0">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Sanctuary Trails Open (4,130m)</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -227,12 +236,15 @@ export const Navbar: React.FC<NavbarProps> = ({
         )}
       </div>
 
-      {/* Subtle Scroll Progress Indicator */}
-      <div className="w-full h-1 bg-slate-100 relative">
+      {/* Luminous Alpine Scroll Progress Indicator */}
+      <div className="w-full h-[3px] bg-slate-200/75 relative overflow-visible shadow-xs">
         <div 
-          className="h-full bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 transition-all duration-150"
+          className="h-full bg-gradient-to-r from-sky-400 via-blue-600 to-amber-400 transition-all duration-150 relative shadow-[0_0_10px_rgba(2,132,199,0.7)]"
           style={{ width: `${Math.max(telemetry.scrollProgress * 100, 2)}%` }}
-        />
+        >
+          {/* Glowing Beacon Head on the leading edge */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-2.5 h-2.5 rounded-full bg-amber-300 border-2 border-slate-900 shadow-[0_0_8px_#fbbf24] transition-transform duration-150" />
+        </div>
       </div>
     </header>
   );

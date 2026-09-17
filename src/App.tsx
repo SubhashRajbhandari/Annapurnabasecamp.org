@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ArrowUp } from 'lucide-react';
 import { useScrollTelemetry } from './hooks/useScrollTelemetry';
 import { Navbar } from './components/navbar/Navbar';
 import { Hero } from './components/hero/Hero';
@@ -121,6 +122,21 @@ export const App: React.FC = () => {
 
       {/* Floating Sherpa Concierge for Instant WhatsApp Conversions */}
       <FloatingConcierge />
+
+      {/* Floating Smooth Scroll to Top / Ascent Telemetry Button */}
+      {telemetry.isScrolled && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full bg-slate-900/90 hover:bg-slate-950 text-white backdrop-blur-md border border-slate-700/80 shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer group animate-in fade-in"
+          aria-label="Scroll back to top"
+          title="Return to Trailhead (822m)"
+        >
+          <ArrowUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-400 group-hover:-translate-y-0.5 transition-transform" />
+          <span className="text-[11px] sm:text-xs font-bold font-mono tracking-tight">
+            Top <span className="text-slate-400">({telemetry.virtualAltitude}m)</span>
+          </span>
+        </button>
+      )}
 
       {/* Official Portal Footer */}
       <Footer />
