@@ -144,15 +144,22 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
         {/* Fallback clean mountain image while video loads */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
-          style={{ backgroundImage: `url('/images/hero-annapurna-white.webp')` }}
+          style={{ 
+            backgroundImage: `url('/images/hero-annapurna-white.webp')`,
+            filter: 'brightness(1.14) contrast(1.04)'
+          }}
         />
-        {/* Ambient Trekking Video with Zero-Copy Hardware Compositing */}
+        {/* Ambient Trekking Video with Zero-Copy Hardware Compositing & Brightness Enhancement */}
         <video
           ref={videoRef}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 transform-gpu ${
             isVideoReady ? 'opacity-100' : 'opacity-0'
           }`}
-          style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+          style={{ 
+            transform: 'translate3d(0, 0, 0)', 
+            backfaceVisibility: 'hidden',
+            filter: 'brightness(1.18) contrast(1.04) saturate(1.08)'
+          }}
           poster="/images/hero-annapurna-white.webp"
           autoPlay
           muted
@@ -165,8 +172,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
         </video>
       </div>
 
-      {/* Warm Gradient Scrim - Clean, High Contrast for Supreme Legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/75 via-slate-900/45 to-slate-950/90 pointer-events-none" />
+      {/* Lighter, Luminous Ambient Gradient Scrim - Keeps Video Bright & Vivid */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-900/20 to-slate-950/65 pointer-events-none" />
 
       {/* Main Content Container with Parallax Elevation */}
       <div 
