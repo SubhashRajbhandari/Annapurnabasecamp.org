@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mountain, MessageSquare, ShieldCheck, Compass, Sparkles, Calendar, Menu, X, ArrowUpRight, BookOpen } from 'lucide-react';
 import { trackWhatsAppClick } from '../../lib/analytics';
 import type { ScrollTelemetry } from '../../hooks/useScrollTelemetry';
@@ -13,7 +13,35 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenBooking
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isScrolled = telemetry.isScrolled;
+  const [scrollY, setScrollY] = useState(0);
+
+  // Smooth real-time scroll tracking
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Gradual multi-stage transition:
+  // 1. 0px to 80px: 100% Transparent (no sudden change upon initial scroll)
+  // 2. 80px to 320px: Translucent (frosted glass, mountain video visible through glass)
+  // 3. 320px to 520px: Transitioning to Opaque
+  // 4. 520px+: 100% Opaque white luxury navbar with bottom border & elevation shadow
+  const fadeStart = 80;
+  const fadeEnd = 500;
+  const scrollRatio = Math.min(Math.max((scrollY - fadeStart) / (fadeEnd - fadeStart), 0), 1);
+
+  // High-contrast text switch at 40% threshold
+  const isLightHeader = scrollRatio > 0.4;
 
   const navLinks = [
     { href: '#packages', label: 'Expedition Tiers' },
@@ -26,14 +54,27 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 w-full transition-all duration-300 pointer-events-auto">
-      {/* Main Luxury Navigation Bar - Transparent at Top, Visible & Frosted on Scroll */}
-      <div className={`transition-all duration-300 px-3 sm:px-8 py-3 sm:py-3.5 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-xl border-b border-slate-200/90 shadow-md text-slate-900'
-          : 'bg-gradient-to-b from-black/75 via-black/30 to-transparent border-b border-transparent shadow-none text-white'
-      }`}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+    <header className="fixed top-0 inset-x-0 z-50 w-full pointer-events-auto">
+      {/* Main Luxury Navigation Bar with Dynamic Scroll-Interpolated Glass */}
+      <div 
+        className="px-3 sm:px-8 py-3 sm:py-3.5 relative border-b transition-[border-color,box-shadow] duration-200"
+        style={{
+          backgroundColor: `rgba(255, 255, 255, ${scrollRatio * 0.96})`,
+          backdropFilter: `blur(${scrollRatio * 16}px)`,
+          WebkitBackdropFilter: `blur(${scrollRatio * 16}px)`,
+          borderBottomColor: scrollRatio > 0.1 ? `rgba(226, 232, 240, ${scrollRatio})` : 'transparent',
+          boxShadow: scrollRatio > 0.2 
+            ? `0 4px 20px -2px rgba(15, 23, 42, ${scrollRatio * 0.08})` 
+            : 'none'
+        }}
+      >
+        {/* Soft top gradient scrim that smoothly fades OUT as the white glass fades in */}
+        <div 
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300 bg-gradient-to-b from-black/75 via-black/25 to-transparent"
+          style={{ opacity: Math.max(0, 1 - scrollRatio * 2.2) }}
+        />
+
+        <div className="relative z-10 max-w-7xl mx-auto flex items-center justify-between gap-2">
           
           {/* Brand Logo & Title */}
           <a href="#" className="flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0">
@@ -43,28 +84,28 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <span className={`font-black text-sm sm:text-lg tracking-tight leading-none transition-colors duration-300 ${
-                  isScrolled ? 'text-slate-900' : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]'
+                  isLightHeader ? 'text-slate-900' : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]'
                 }`}>
                   ANNAPURNA
                 </span>
                 <span className={`text-[9px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-full font-bold uppercase tracking-wider transition-all duration-300 shrink-0 ${
-                  isScrolled
+                  isLightHeader
                     ? 'bg-amber-50 border border-amber-200 text-amber-800'
                     : 'bg-black/40 border border-white/25 text-amber-300 backdrop-blur-md'
                 }`}>
                   4,130M
                 </span>
 
-                {/* Live Altitude Telemetry Badge (Appears when scrolled down the trail) */}
-                {isScrolled && (
-                  <span className="hidden xl:inline-flex items-center gap-1.5 text-[11px] font-bold font-mono px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200/80 animate-in fade-in shrink-0">
+                {/* Live Altitude Telemetry Badge (Gradually reveals as you descend the trail) */}
+                {scrollRatio > 0.35 && (
+                  <span className="hidden xl:inline-flex items-center gap-1.5 text-[11px] font-bold font-mono px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200/80 animate-in fade-in shrink-0 transition-opacity duration-300">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                     <span>▲ {telemetry.virtualAltitude.toLocaleString()}m ({telemetry.currentWaypoint.name})</span>
                   </span>
                 )}
               </div>
               <div className={`text-[10px] sm:text-[11px] font-semibold tracking-wide mt-0.5 hidden sm:block truncate transition-colors duration-300 ${
-                isScrolled ? 'text-slate-500' : 'text-slate-200/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'
+                isLightHeader ? 'text-slate-500' : 'text-slate-200/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'
               }`}>
                 Annapurnabasecamp.org — Official Expedition Portal
               </div>
@@ -78,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={link.href}
                 href={link.href}
                 className={`px-3 py-2 rounded-xl transition-all whitespace-nowrap ${
-                  isScrolled
+                  isLightHeader
                     ? 'text-slate-600 hover:text-slate-950 hover:bg-slate-100/80'
                     : 'text-white/90 hover:text-white hover:bg-white/15 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'
                 }`}
@@ -97,9 +138,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               rel="noopener noreferrer"
               onClick={() => trackWhatsAppClick('Navbar Direct Chat')}
               className={`hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
-                isScrolled
+                isLightHeader
                   ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
-                  : 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 hover:bg-emerald-500/30 backdrop-blur-md drop-shadow-sm'
+                  : 'bg-emerald-500/25 text-emerald-300 border border-emerald-400/30 hover:bg-emerald-500/35 backdrop-blur-md drop-shadow-sm'
               }`}
               title="Chat with Sherpa Team on WhatsApp"
             >
@@ -131,7 +172,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={`lg:hidden p-2 sm:p-2.5 rounded-xl border transition cursor-pointer shrink-0 ${
-                isScrolled
+                isLightHeader
                   ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
                   : 'bg-black/40 hover:bg-black/60 border-white/25 text-white backdrop-blur-md shadow-sm'
               }`}
@@ -144,8 +185,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className={`lg:hidden mt-3 pt-3 border-t rounded-2xl p-4 flex flex-col gap-2.5 font-medium text-sm shadow-2xl animate-in fade-in duration-200 ${
-            isScrolled
+          <div className={`relative z-20 lg:hidden mt-3 pt-3 border-t rounded-2xl p-4 flex flex-col gap-2.5 font-medium text-sm shadow-2xl animate-in fade-in duration-200 ${
+            isLightHeader
               ? 'bg-white border-slate-100 text-slate-800'
               : 'bg-slate-950/95 border-slate-800 text-white backdrop-blur-xl'
           }`}>
@@ -153,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="#packages" 
               onClick={() => setMobileMenuOpen(false)}
               className={`py-2.5 px-3 rounded-xl flex items-center gap-2 font-semibold ${
-                isScrolled ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
+                isLightHeader ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
               }`}
             >
               <Sparkles className="w-4 h-4 text-amber-500" /> Expedition Tiers (3★, 4★, 5★)
@@ -162,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="#guides" 
               onClick={() => setMobileMenuOpen(false)}
               className={`py-2.5 px-3 rounded-xl flex items-center gap-2 font-semibold ${
-                isScrolled ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
+                isLightHeader ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
               }`}
             >
               <BookOpen className="w-4 h-4 text-sky-500" /> Expedition Field Guides & Knowledge Hub
@@ -171,7 +212,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="#elevation" 
               onClick={() => setMobileMenuOpen(false)}
               className={`py-2.5 px-3 rounded-xl flex items-center gap-2 font-semibold ${
-                isScrolled ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
+                isLightHeader ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
               }`}
             >
               <Compass className="w-4 h-4 text-sky-500" /> Route & Altitude Profile
@@ -180,7 +221,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="#itineraries" 
               onClick={() => setMobileMenuOpen(false)}
               className={`py-2.5 px-3 rounded-xl font-semibold ${
-                isScrolled ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
+                isLightHeader ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
               }`}
             >
               Day-by-Day Journey Itinerary
@@ -189,7 +230,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="#safety" 
               onClick={() => setMobileMenuOpen(false)}
               className={`py-2.5 px-3 rounded-xl flex items-center gap-2 font-semibold ${
-                isScrolled ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
+                isLightHeader ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
               }`}
             >
               <ShieldCheck className="w-4 h-4 text-emerald-500" /> Acclimatization & Packing Checklist
@@ -198,7 +239,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="#faq" 
               onClick={() => setMobileMenuOpen(false)}
               className={`py-2.5 px-3 rounded-xl font-semibold ${
-                isScrolled ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
+                isLightHeader ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
               }`}
             >
               Frequently Asked Questions (FAQ)
@@ -207,7 +248,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="#booking" 
               onClick={() => setMobileMenuOpen(false)}
               className={`py-2.5 px-3 rounded-xl font-semibold ${
-                isScrolled ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
+                isLightHeader ? 'hover:bg-slate-50 text-slate-900' : 'hover:bg-slate-800 text-white'
               }`}
             >
               Dynamic Pricing Configurator
@@ -226,9 +267,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Luminous Alpine Scroll Progress Indicator (Smoothly fades in as you scroll down) */}
-      <div className={`w-full h-[3px] transition-opacity duration-300 relative overflow-visible ${
-        isScrolled ? 'opacity-100 bg-slate-200/75 shadow-xs' : 'opacity-0'
-      }`}>
+      <div 
+        className="w-full h-[3px] transition-opacity duration-200 relative overflow-visible"
+        style={{ opacity: scrollRatio }}
+      >
         <div 
           className="h-full bg-gradient-to-r from-sky-400 via-blue-600 to-amber-400 transition-all duration-150 relative shadow-[0_0_10px_rgba(2,132,199,0.7)]"
           style={{ width: `${Math.max(telemetry.scrollProgress * 100, 2)}%` }}
