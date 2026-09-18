@@ -146,10 +146,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
           style={{ 
             backgroundImage: `url('/images/hero-annapurna-white.webp')`,
-            filter: 'brightness(1.14) contrast(1.04)'
+            filter: 'brightness(1.28) contrast(1.05)'
           }}
         />
-        {/* Ambient Trekking Video with Zero-Copy Hardware Compositing & Brightness Enhancement */}
+        {/* Ambient Trekking Video with Zero-Copy Hardware Compositing & High Brightness Boost */}
         <video
           ref={videoRef}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 transform-gpu ${
@@ -158,7 +158,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           style={{ 
             transform: 'translate3d(0, 0, 0)', 
             backfaceVisibility: 'hidden',
-            filter: 'brightness(1.18) contrast(1.04) saturate(1.08)'
+            filter: 'brightness(1.32) contrast(1.06) saturate(1.12)'
           }}
           poster="/images/hero-annapurna-white.webp"
           autoPlay
@@ -172,8 +172,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
         </video>
       </div>
 
-      {/* Lighter, Luminous Ambient Gradient Scrim - Keeps Video Bright & Vivid */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-900/20 to-slate-950/65 pointer-events-none" />
+      {/* Ultra-Light Luminous Scrim - Clear Center allows video to shine through with full brightness */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/45 pointer-events-none" />
 
       {/* Main Content Container with Parallax Elevation */}
       <div 
