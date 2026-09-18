@@ -31,17 +31,17 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Gradual multi-stage transition:
-  // 1. 0px to 80px: 100% Transparent (no sudden change upon initial scroll)
-  // 2. 80px to 320px: Translucent (frosted glass, mountain video visible through glass)
-  // 3. 320px to 520px: Transitioning to Opaque
-  // 4. 520px+: 100% Opaque white luxury navbar with bottom border & elevation shadow
-  const fadeStart = 80;
-  const fadeEnd = 500;
+  // Ultra-gradual multi-stage transition spanning the entire hero viewport:
+  // 1. 0px to 150px: 100% Transparent (untouched mountain video under header)
+  // 2. 150px to 550px: Delicately Translucent (frosted glass slowly forms, video clearly visible through glass)
+  // 3. 550px to 950px: Smoothly solidifying toward opaque, text gently transitions to slate-900
+  // 4. 950px+: 100% Opaque luxury white sticky bar with subtle elevation shadow
+  const fadeStart = 150;
+  const fadeEnd = 950;
   const scrollRatio = Math.min(Math.max((scrollY - fadeStart) / (fadeEnd - fadeStart), 0), 1);
 
-  // High-contrast text switch at 40% threshold
-  const isLightHeader = scrollRatio > 0.4;
+  // High-contrast text switch only once the white glass has solid presence (> 58%)
+  const isLightHeader = scrollRatio > 0.58;
 
   const navLinks = [
     { href: '#packages', label: 'Expedition Tiers' },
@@ -57,21 +57,21 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="fixed top-0 inset-x-0 z-50 w-full pointer-events-auto">
       {/* Main Luxury Navigation Bar with Dynamic Scroll-Interpolated Glass */}
       <div 
-        className="px-3 sm:px-8 py-3 sm:py-3.5 relative border-b transition-[border-color,box-shadow] duration-200"
+        className="px-3 sm:px-8 py-3 sm:py-3.5 relative border-b transition-[border-color,box-shadow] duration-300"
         style={{
           backgroundColor: `rgba(255, 255, 255, ${scrollRatio * 0.96})`,
           backdropFilter: `blur(${scrollRatio * 16}px)`,
           WebkitBackdropFilter: `blur(${scrollRatio * 16}px)`,
-          borderBottomColor: scrollRatio > 0.1 ? `rgba(226, 232, 240, ${scrollRatio})` : 'transparent',
-          boxShadow: scrollRatio > 0.2 
+          borderBottomColor: scrollRatio > 0.25 ? `rgba(226, 232, 240, ${scrollRatio})` : 'transparent',
+          boxShadow: scrollRatio > 0.35 
             ? `0 4px 20px -2px rgba(15, 23, 42, ${scrollRatio * 0.08})` 
             : 'none'
         }}
       >
         {/* Soft top gradient scrim that smoothly fades OUT as the white glass fades in */}
         <div 
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300 bg-gradient-to-b from-black/75 via-black/25 to-transparent"
-          style={{ opacity: Math.max(0, 1 - scrollRatio * 2.2) }}
+          className="absolute inset-0 pointer-events-none transition-opacity duration-500 bg-gradient-to-b from-black/75 via-black/25 to-transparent"
+          style={{ opacity: Math.max(0, 1 - scrollRatio * 1.5) }}
         />
 
         <div className="relative z-10 max-w-7xl mx-auto flex items-center justify-between gap-2">
@@ -83,12 +83,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className={`font-black text-sm sm:text-lg tracking-tight leading-none transition-colors duration-300 ${
+                <span className={`font-black text-sm sm:text-lg tracking-tight leading-none transition-colors duration-500 ${
                   isLightHeader ? 'text-slate-900' : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]'
                 }`}>
                   ANNAPURNA
                 </span>
-                <span className={`text-[9px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-full font-bold uppercase tracking-wider transition-all duration-300 shrink-0 ${
+                <span className={`text-[9px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-full font-bold uppercase tracking-wider transition-all duration-500 shrink-0 ${
                   isLightHeader
                     ? 'bg-amber-50 border border-amber-200 text-amber-800'
                     : 'bg-black/40 border border-white/25 text-amber-300 backdrop-blur-md'
@@ -97,14 +97,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
 
                 {/* Live Altitude Telemetry Badge (Gradually reveals as you descend the trail) */}
-                {scrollRatio > 0.35 && (
-                  <span className="hidden xl:inline-flex items-center gap-1.5 text-[11px] font-bold font-mono px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200/80 animate-in fade-in shrink-0 transition-opacity duration-300">
+                {scrollRatio > 0.45 && (
+                  <span className="hidden xl:inline-flex items-center gap-1.5 text-[11px] font-bold font-mono px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200/80 animate-in fade-in shrink-0 transition-opacity duration-500">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                     <span>▲ {telemetry.virtualAltitude.toLocaleString()}m ({telemetry.currentWaypoint.name})</span>
                   </span>
                 )}
               </div>
-              <div className={`text-[10px] sm:text-[11px] font-semibold tracking-wide mt-0.5 hidden sm:block truncate transition-colors duration-300 ${
+              <div className={`text-[10px] sm:text-[11px] font-semibold tracking-wide mt-0.5 hidden sm:block truncate transition-colors duration-500 ${
                 isLightHeader ? 'text-slate-500' : 'text-slate-200/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'
               }`}>
                 Annapurnabasecamp.org — Official Expedition Portal
@@ -118,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <a
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-2 rounded-xl transition-all whitespace-nowrap ${
+                className={`px-3 py-2 rounded-xl transition-all duration-500 whitespace-nowrap ${
                   isLightHeader
                     ? 'text-slate-600 hover:text-slate-950 hover:bg-slate-100/80'
                     : 'text-white/90 hover:text-white hover:bg-white/15 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]'
@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackWhatsAppClick('Navbar Direct Chat')}
-              className={`hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
+              className={`hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-500 shrink-0 cursor-pointer ${
                 isLightHeader
                   ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
                   : 'bg-emerald-500/25 text-emerald-300 border border-emerald-400/30 hover:bg-emerald-500/35 backdrop-blur-md drop-shadow-sm'
