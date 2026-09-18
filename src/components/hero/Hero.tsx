@@ -134,7 +134,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
   return (
     <section
       ref={heroSectionRef}
-      className="relative min-h-[92vh] flex flex-col justify-center pt-20 sm:pt-24 pb-14 sm:pb-16 px-3 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white w-full max-w-full"
+      className="relative min-h-[95vh] flex flex-col justify-center pt-28 sm:pt-32 pb-14 sm:pb-16 px-3 sm:px-6 lg:px-8 overflow-hidden bg-slate-900 text-white w-full max-w-full"
     >
       {/* Cinematic High-Resolution Mountain Video Background with Parallax Glide */}
       <div 
