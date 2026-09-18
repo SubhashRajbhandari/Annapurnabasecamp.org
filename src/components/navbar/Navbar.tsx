@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mountain, Phone, Mail, MessageSquare, ShieldCheck, Compass, Sparkles, Calendar, Menu, X, ArrowUpRight, BookOpen } from 'lucide-react';
+import { trackWhatsAppClick } from '../../lib/analytics';
 import type { ScrollTelemetry } from '../../hooks/useScrollTelemetry';
 
 interface NavbarProps {
@@ -42,6 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="https://wa.me/9779820107807?text=Namaste!%20I%20am%20interested%20in%20booking%20the%20Annapurna%20Base%20Camp%20Trek."
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick('Navbar Top Dispatch')}
               className="flex items-center gap-1 px-2 sm:px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors font-medium shrink-0"
             >
               <MessageSquare className="w-3 h-3 shrink-0" />

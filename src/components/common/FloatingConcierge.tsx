@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageSquare, X } from 'lucide-react';
+import { trackWhatsAppClick } from '../../lib/analytics';
 
 export const FloatingConcierge: React.FC = () => {
   const [minimized, setMinimized] = useState(() => {
@@ -45,6 +46,7 @@ export const FloatingConcierge: React.FC = () => {
             href="https://wa.me/9779820107807?text=Namaste%20Ang%20Sherpa!%20I%20am%20planning%20an%20Annapurna%20Base%20Camp%20trek%20and%20would%20love%20some%20guidance."
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick('Floating Concierge')}
             className="w-full py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/25 transition-all"
           >
             <MessageSquare className="w-3.5 h-3.5" />

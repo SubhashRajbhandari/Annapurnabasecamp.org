@@ -3,6 +3,7 @@ import type { BookingFormState } from '../../types/trek';
 import { TREK_PACKAGES } from '../../data/packages';
 import { createBooking } from '../../services/bookingService';
 import { isSupabaseConfigured } from '../../lib/supabase';
+import { trackEvent } from '../../lib/analytics';
 import confetti from 'canvas-confetti';
 import {
   X,
@@ -85,6 +86,19 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         setReservationCode(result.bookingCode);
         setIsMock(result.isMock);
         setIsSubmitted(true);
+
+        // Track official conversion in Google Analytics 4
+        trackEvent('purchase', {
+          transaction_id: result.bookingCode,
+          value: totalPrice,
+          currency: bookingData.currency,
+          items: [{ item_name: currentPkg.title, price: totalPrice }]
+        });
+        trackEvent('generate_lead', {
+          currency: bookingData.currency,
+          value: totalPrice,
+          lead_type: 'Sanctuary Trek Reservation'
+        });
 
         try {
           confetti({

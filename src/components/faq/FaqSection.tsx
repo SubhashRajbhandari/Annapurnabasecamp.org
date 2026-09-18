@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { HelpCircle, ChevronDown, Search, Sparkles, MessageSquare } from 'lucide-react';
+import { trackWhatsAppClick } from '../../lib/analytics';
 
 export interface FaqItem {
   id: string;
@@ -357,6 +358,7 @@ export const FaqSection: React.FC = () => {
             href="https://wa.me/9779820107807?text=Namaste!%20I%20have%20a%20question%20about%20the%20Annapurna%20Base%20Camp%20Trek."
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick('FAQ Bottom CTA')}
             className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all cursor-pointer"
           >
             <MessageSquare className="w-4 h-4" />

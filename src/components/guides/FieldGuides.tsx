@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   MessageSquare
 } from 'lucide-react';
+import { trackWhatsAppClick } from '../../lib/analytics';
 
 interface GuideArticle {
   id: string;
@@ -495,6 +496,7 @@ export const FieldGuides: React.FC = () => {
                 href="https://wa.me/9779820107807?text=Namaste!%20I%20am%20reading%20your%20Annapurna%20field%20guide%20and%20would%20like%20to%20consult%20with%20a%20lead%20guide."
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick('Field Guide Reader Modal')}
                 className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-500/25 transition-all"
               >
                 <MessageSquare className="w-4 h-4" />
