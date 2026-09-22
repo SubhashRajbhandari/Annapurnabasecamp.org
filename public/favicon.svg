@@ -1,36 +1,41 @@
 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="favSkyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0284C7" />
-      <stop offset="50%" stop-color="#0369A1" />
-      <stop offset="100%" stop-color="#0F172A" />
-    </linearGradient>
-    <linearGradient id="favSnowLight" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="100%" stop-color="#E0F2FE" />
-    </linearGradient>
-    <linearGradient id="favSnowShadow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#BAE6FD" />
-      <stop offset="100%" stop-color="#38BDF8" />
-    </linearGradient>
-    <linearGradient id="favRockDark" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0C4A6E" />
-      <stop offset="100%" stop-color="#082F49" />
+    <linearGradient id="favSketchBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1528" />
+      <stop offset="50%" stop-color="#0F2445" />
+      <stop offset="100%" stop-color="#060C17" />
     </linearGradient>
   </defs>
 
-  <rect width="100" height="100" rx="24" fill="url(#favSkyGrad)" />
-  <circle cx="72" cy="28" r="10" fill="#F59E0B" />
-  <circle cx="72" cy="28" r="7" fill="#FEF08A" />
+  <rect width="100" height="100" rx="24" fill="url(#favSketchBg)" />
+  <circle cx="50" cy="50" r="44" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2" stroke-dasharray="3 3" />
 
-  <polygon points="38,24 14,78 44,78" fill="url(#favSnowLight)" />
-  <polygon points="38,24 44,78 64,78" fill="url(#favSnowShadow)" />
-  <polygon points="38,24 28,44 38,40 48,46" fill="#FFFFFF" />
+  <circle cx="70" cy="28" r="7" fill="#FDE047" stroke="#F59E0B" stroke-width="1.2" />
 
-  <polygon points="66,36 50,86 68,86" fill="url(#favSnowLight)" />
-  <polygon points="74,38 68,86 88,86" fill="url(#favRockDark)" />
-  <polygon points="66,36 70,44 74,38 72,50 66,48" fill="#FFFFFF" />
+  <!-- Annapurna I Silhouette & Hatching -->
+  <path d="M 12 76 L 24 56 L 36 24 L 46 44 L 56 62 L 62 76" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 36 24 Q 38 42 42 58 Q 45 68 48 76" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+  <g stroke="#38BDF8" stroke-width="1.4" stroke-linecap="round">
+    <line x1="38" y1="36" x2="45" y2="41" />
+    <line x1="39" y1="44" x2="49" y2="50" />
+    <line x1="41" y1="54" x2="54" y2="62" />
+    <line x1="44" y1="65" x2="59" y2="74" />
+  </g>
 
-  <polygon points="38,18 40,23 45,24 40,25 38,30 36,25 31,24 36,23" fill="#FDE047" />
+  <!-- Machapuchare Fishtail Silhouette & Hatching -->
+  <path d="M 48 84 L 56 64 L 64 34 Q 67 42 70 36 L 78 54 L 88 84" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 67 42 Q 68 56 66 70 Q 64 78 62 84" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+  <g stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round">
+    <line x1="68" y1="46" x2="74" y2="44" />
+    <line x1="67" y1="56" x2="76" y2="56" />
+    <line x1="65" y1="68" x2="80" y2="70" />
+    <line x1="63" y1="80" x2="86" y2="84" />
+  </g>
+
+  <!-- Modi Khola Stream -->
+  <path d="M 48 82 Q 52 86 46 91 Q 42 95 50 100" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- Gold Summit Star -->
+  <path d="M 36 17 L 37.5 21.5 L 42 23 L 37.5 24.5 L 36 29 L 34.5 24.5 L 30 23 L 34.5 21.5 Z" fill="#FEF08A" stroke="#F59E0B" stroke-width="0.8" />
   <rect x="1" y="1" width="98" height="98" rx="23" stroke="rgba(255, 255, 255, 0.25)" stroke-width="2" fill="none" />
 </svg>
