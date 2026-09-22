@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Mountain, MessageSquare, ShieldCheck, Compass, Sparkles, Calendar, Menu, X, ArrowUpRight, BookOpen } from 'lucide-react';
+import { MessageSquare, ShieldCheck, Compass, Sparkles, Calendar, Menu, X, ArrowUpRight, BookOpen } from 'lucide-react';
+import { BrandLogo } from '../common/BrandLogo';
 import { trackWhatsAppClick } from '../../lib/analytics';
 import type { ScrollTelemetry } from '../../hooks/useScrollTelemetry';
 
@@ -77,10 +78,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="relative z-10 max-w-7xl mx-auto flex items-center justify-between gap-2">
           
           {/* Brand Logo & Title */}
-          <a href="#" className="flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center overflow-hidden bg-gradient-to-br from-sky-500 via-blue-600 to-indigo-700 text-white shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform shrink-0">
-              <Mountain className="w-4 h-4 sm:w-6 sm:h-6" />
-            </div>
+          <a href="#" className="flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0" aria-label="Annapurna Base Camp Official Expedition Portal">
+            <BrandLogo size="md" />
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <span className={`font-black text-sm sm:text-lg tracking-tight leading-none transition-colors duration-500 ${

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Mountain, Phone, Mail, MessageSquare, ShieldCheck, MapPin, Heart } from 'lucide-react';
+import { Phone, Mail, MessageSquare, ShieldCheck, MapPin, Heart } from 'lucide-react';
+import { BrandLogo } from '../common/BrandLogo';
 import { trackWhatsAppClick } from '../../lib/analytics';
 
 export const Footer: React.FC = () => {
@@ -10,9 +11,7 @@ export const Footer: React.FC = () => {
           {/* Col 1: Brand & Authority */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-sky-500 via-blue-600 to-indigo-700 text-white flex items-center justify-center shadow-md">
-                <Mountain className="w-5 h-5" />
-              </div>
+              <BrandLogo size="md" />
               <div>
                 <div className="text-white font-black text-base tracking-tight">
                   ANNAPURNA BASE CAMP
