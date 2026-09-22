@@ -33,6 +33,78 @@ export const AltitudeGuide: React.FC = () => {
         ))}
       </div>
 
+      {/* Altitude & Atmospheric Oxygen Telemetry Table */}
+      <div className="mb-8 overflow-hidden rounded-2xl border border-slate-200 shadow-2xs">
+        <div className="bg-slate-900 text-white px-5 py-3 text-xs font-bold uppercase tracking-wider flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <span>Trail Waypoint Altitude, Oxygen & Acclimatization Index</span>
+          <span className="text-amber-400 font-mono text-[11px]">Wilderness Medical Society Standards</span>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="bg-slate-100/90 text-slate-700 font-bold border-b border-slate-200">
+                <th className="p-3">Waypoint / Station</th>
+                <th className="p-3">Altitude (m / ft)</th>
+                <th className="p-3">Effective Oxygen</th>
+                <th className="p-3">Barometric Pressure</th>
+                <th className="p-3">Acclimatization Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
+              <tr className="hover:bg-slate-50/80 transition-colors">
+                <td className="p-3 font-bold text-slate-900">Pokhara Lakeside</td>
+                <td className="p-3 font-mono">822m / 2,697ft</td>
+                <td className="p-3 text-emerald-600 font-bold">100% (Sea Level Baseline)</td>
+                <td className="p-3 font-mono">690 mmHg</td>
+                <td className="p-3 text-slate-500">Normal Baseline</td>
+              </tr>
+              <tr className="hover:bg-slate-50/80 transition-colors">
+                <td className="p-3 font-bold text-slate-900">Jhinu Danda (Hot Springs)</td>
+                <td className="p-3 font-mono">1,780m / 5,840ft</td>
+                <td className="p-3 text-emerald-600 font-bold">82.1%</td>
+                <td className="p-3 font-mono">618 mmHg</td>
+                <td className="p-3 text-emerald-700">Safe Hiking Zone</td>
+              </tr>
+              <tr className="hover:bg-slate-50/80 transition-colors">
+                <td className="p-3 font-bold text-slate-900">Chhomrong Village</td>
+                <td className="p-3 font-mono">2,170m / 7,119ft</td>
+                <td className="p-3 text-emerald-600 font-bold">78.4%</td>
+                <td className="p-3 font-mono">590 mmHg</td>
+                <td className="p-3 text-emerald-700">Pre-Acclimatization</td>
+              </tr>
+              <tr className="hover:bg-slate-50/80 transition-colors">
+                <td className="p-3 font-bold text-slate-900">Bamboo / Dovan</td>
+                <td className="p-3 font-mono">2,500m / 8,202ft</td>
+                <td className="p-3 text-amber-600 font-bold">75.2%</td>
+                <td className="p-3 font-mono">565 mmHg</td>
+                <td className="p-3 text-amber-700">Altitude Threshold (Drink 3L+ Water)</td>
+              </tr>
+              <tr className="hover:bg-slate-50/80 transition-colors">
+                <td className="p-3 font-bold text-slate-900">Deurali Canyon</td>
+                <td className="p-3 font-mono">3,230m / 10,597ft</td>
+                <td className="p-3 text-amber-600 font-bold">69.1%</td>
+                <td className="p-3 font-mono">520 mmHg</td>
+                <td className="p-3 text-amber-700 font-semibold">Active Acclimatization Protocol</td>
+              </tr>
+              <tr className="hover:bg-slate-50/80 transition-colors">
+                <td className="p-3 font-bold text-slate-900">Machapuchare Base Camp (MBC)</td>
+                <td className="p-3 font-mono">3,700m / 12,139ft</td>
+                <td className="p-3 text-red-600 font-bold">65.3%</td>
+                <td className="p-3 font-mono">491 mmHg</td>
+                <td className="p-3 text-red-700 font-semibold">High Altitude Cirque Gateway</td>
+              </tr>
+              <tr className="bg-sky-50/50 hover:bg-sky-50 transition-colors">
+                <td className="p-3 font-black text-sky-900">Annapurna Base Camp (ABC)</td>
+                <td className="p-3 font-mono font-bold text-sky-900">4,130m / 13,550ft</td>
+                <td className="p-3 text-red-600 font-black">62.4% (~38% oxygen drop)</td>
+                <td className="p-3 font-mono font-bold">468 mmHg</td>
+                <td className="p-3 text-sky-800 font-bold">Sacred Sanctuary Summit</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/* Emergency Helicopter & Medical Standby Banner */}
       <div className="bg-gradient-to-r from-red-50/80 via-white to-sky-50/80 border border-red-200 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs">
         <div className="flex items-center gap-4">

@@ -10,7 +10,9 @@ import {
   Sparkles, 
   CheckCircle2,
   ShieldCheck,
-  MessageSquare
+  MessageSquare,
+  Activity,
+  Wifi
 } from 'lucide-react';
 import { trackWhatsAppClick } from '../../lib/analytics';
 
@@ -291,6 +293,144 @@ export const FIELD_GUIDES: GuideArticle[] = [
         }
       ],
       proTip: 'Keep your physical permit papers safely sealed in a waterproof Ziploc bag in your daypack, as you will need to present them at checkpoints in both directions.'
+    }
+  },
+  {
+    id: 'guide-circuit-vs-basecamp',
+    category: 'Route Comparison',
+    title: 'Annapurna Circuit vs Annapurna Base Camp (ACT vs ABC): Which Trek Should You Choose?',
+    readTime: '6 min read',
+    snippet: 'Compare the legendary 5,416m Thorong La Pass high circuit against the intimate, pristine 4,130m Annapurna Sanctuary cul-de-sac.',
+    badge: 'Route Decision Matrix',
+    icon: GitCompare,
+    publishedDate: '2026/2027 Season',
+    content: {
+      lead: 'Both the Annapurna Circuit (ACT) and Annapurna Base Camp (ABC) are world-class Himalayan journeys, but they offer vastly different experiences in terms of altitude exposure, duration, road encroachment, and trail landscapes. Here is a definitive breakdown to help you choose the right expedition.',
+      sections: [
+        {
+          heading: '1. Trail Highlights: Thorong La Pass vs The Sacred Sanctuary Cirque',
+          body: 'The character of each journey is distinct:',
+          bullets: [
+            'Annapurna Circuit (ACT): Climbs over Thorong La Pass at 5,416m (17,769ft), connecting the lush sub-tropical lowlands of Lamjung with the arid Tibetan-plateau desert landscape of Mustang and the sacred temples of Muktinath.',
+            'Annapurna Base Camp (ABC): Ventures deep into a glacial cul-de-sac at 4,130m (13,550ft) surrounded on all sides by 10 soaring peaks over 7,000m, culminating beneath the colossal 8,091m South Face of Annapurna I.',
+            'Scenery Comparison: The Circuit offers vast transition through biomes, while ABC offers an intimate, immediate 360° wall of hanging glaciers.'
+          ]
+        },
+        {
+          heading: '2. Duration, Time Commitment & Physical Demand',
+          body: 'Evaluate the physical commitment and vacation time required:',
+          table: {
+            headers: ['Expedition Metric', 'Annapurna Base Camp (ABC)', 'Annapurna Circuit (ACT)'],
+            rows: [
+              ['Standard Duration', '7 to 11 Days', '14 to 21 Days (or 10-12 days shortened)'],
+              ['Highest Elevation', '4,130m (13,550ft at Base Camp)', '5,416m (17,769ft at Thorong La Pass)'],
+              ['Altitude Sickness (AMS) Risk', 'Low to Moderate', 'High (Mandatory acclimatization in Manang)'],
+              ['Road Construction Impact', 'Zero roads past Ghandruk/Jhinu (100% Pure Trail)', 'Dirt jeep roads now traverse parts of the lower Circuit'],
+              ['Total Walking Distance', 'Approx. 115 km (71 miles)', 'Approx. 160 – 230 km (99 – 143 miles)'],
+              ['Best For', 'Active travelers with 1-2 weeks vacation', 'Long-distance trekkers with 3+ weeks']
+            ]
+          }
+        },
+        {
+          heading: '3. The Road Encroachment Factor',
+          body: 'Over the past decade, dirt motor roads have been carved along the Marsyangdi and Kali Gandaki river valleys of the Annapurna Circuit, meaning trekkers frequently encounter jeeps and dust on certain sections. In contrast, the Annapurna Sanctuary route remains 100% road-free beyond the initial trailheads, preserving an authentic, serene foot-trail mountain wilderness.'
+        },
+        {
+          heading: '4. Summary Verdict',
+          body: 'Choose ABC if you have 1 to 2 weeks, want a classic mountain amphitheater with zero road noise, and prefer lower altitude sickness risk. Choose the Circuit if you have 3 full weeks and want the challenge of conquering a 5,400m high-altitude Himalayan mountain pass.'
+        }
+      ],
+      proTip: 'For the ultimate combination of high-altitude alpine views without exhausting 4-day descents, our 5-Star ABC package features a scenic VIP helicopter flight directly from Base Camp (4,130m) back to Pokhara Lakeside in just 25 minutes.'
+    }
+  },
+  {
+    id: 'guide-training-preparation',
+    category: 'Altitude Safety',
+    title: 'How to Train for Annapurna Base Camp: 8-Week Fitness & Stairs Conditioning Guide',
+    readTime: '5 min read',
+    snippet: 'Targeted cardiovascular conditioning, stair climbing drills, eccentric quad strength, and endurance benchmarks for conquering 3,300 stone steps.',
+    badge: 'Pre-Trek Training',
+    icon: Activity,
+    publishedDate: '2026/2027 Season',
+    content: {
+      lead: 'While Annapurna Base Camp (4,130m) does not require technical climbing ropes or ice axes, it demands robust muscular endurance and cardiovascular stamina. The trail features approximately 3,300 steep stone steps connecting Chhomrong, Sinuwa, and the Modi Khola river canyon. Following this structured 8-week program will ensure your knees, lungs, and legs are expedition-ready.',
+      sections: [
+        {
+          heading: '1. The Core Pillar: Stair Climbing & Eccentric Quad Loading',
+          body: 'The most physically demanding aspect of the ABC trail is not ascending—it is the repetitive knee-jarring descent down thousands of uneven stone steps. Eccentric leg training strengthens tendons and cushions knee cartilage:',
+          bullets: [
+            'Stairmaster / Real Stairs: 30 to 45 minutes, 3 times weekly. Carry a light daypack (5–8kg) to simulate trail load.',
+            'Eccentric Step-Downs: 3 sets of 15 slow reps per leg off a 15–20cm step to bulletproof patellar tendons.',
+            'Goblet Squats & Lunges: Strengthen quadriceps, hamstrings, and glutes for high-stepping over boulders.',
+            'Trekking Poles: Dual poles reduce downhill knee joint impact by up to 25%, saving up to 8 metric tons of joint load over a 6-day trek.'
+          ]
+        },
+        {
+          heading: '2. Zone 2 Aerobic Base Conditioning',
+          body: 'Trekking requires steady energy production over 5 to 7 hours daily without accumulating lactic acid. Train in Zone 2 heart rate (where you can hold a conversation while breathing deeply):',
+          bullets: [
+            'Brisk Incline Walking / Outdoor Trail Hikes: 60–90 minutes once or twice weekly on undulating outdoor terrain.',
+            'Stationary Rowing or Cycling: Low-impact cardio that builds lung volume and cardiovascular capacity without wearing down knee cartilage.',
+            'Diaphragmatic Breathing: Practice rhythmic nasal breathing during cardio intervals to prepare for thinner air above 3,000m.'
+          ]
+        },
+        {
+          heading: '3. 8-Week Countdown Training Schedule',
+          body: 'Follow this progressive milestone plan leading up to your Nepal departure:',
+          table: {
+            headers: ['Phase', 'Weekly Training Focus', 'Target Milestone'],
+            rows: [
+              ['Weeks 1–3: Foundation', '3x 30-min cardio + Bodyweight squats & planks', 'Comfortable 5km brisk walk with 3kg daypack'],
+              ['Weeks 4–6: Progression', 'Stairmaster 45 min + Incline hill hikes with 6kg pack', 'Continuous 40-floor stair climb without stopping'],
+              ['Week 7: Peak Simulation', '2-hour weekend trail hike with 8kg pack & trekking poles', 'Full daypack stamina test on rugged hills'],
+              ['Week 8: Taper & Rest', 'Light 20-min walks, mobility, calf & hamstring stretching', 'Arrive in Kathmandu 100% recovered and fresh']
+            ]
+          }
+        }
+      ],
+      proTip: 'Break in your trekking boots at least 4 to 6 weeks before departure. Wear them on your stair training sessions with your expedition merino wool socks to eliminate blister hotspots.'
+    }
+  },
+  {
+    id: 'guide-connectivity-sim-cards',
+    category: 'Permits & Rules',
+    title: 'Connectivity on ABC Trek: NTC vs Ncell 4G, Teahouse Wi-Fi & Power Charging (2026)',
+    readTime: '5 min read',
+    snippet: 'Complete digital survival guide for Nepal: which SIM card works best in the sanctuary, satellite communication, Wi-Fi voucher costs, and solar charging tips.',
+    badge: 'Digital Logistics',
+    icon: Wifi,
+    publishedDate: '2026/2027 Season',
+    content: {
+      lead: 'Staying connected with family and colleagues while trekking deep into the Annapurna Sanctuary is easier than ever, but remote high-altitude geography presents unique quirks. Here is the definitive telecommunications and electrical guide for the ABC trail.',
+      sections: [
+        {
+          heading: '1. NTC (Namaste) vs Ncell: Which SIM Card is Better for ABC?',
+          body: 'Both major cellular carriers operate towers in the Annapurna region, but their coverage patterns differ along the trail:',
+          bullets: [
+            'Nepal Telecom (NTC / Namaste): Best overall coverage in the Annapurna Sanctuary. Operates dedicated solar-powered relay towers near Deurali and Chhomrong, providing 4G/3G connectivity up to Machapuchare Base Camp (3,700m).',
+            'Ncell: Excellent high-speed 4G data in Kathmandu, Pokhara, Nayapul, and Ghandruk, but signal fades significantly once inside the deep Modi Khola river canyon beyond Bamboo.',
+            'Recommendation: Pick up an NTC tourist eSIM or physical SIM at Kathmandu Airport (TIA) or Pokhara Lakeside for $10–$15 USD with 20GB–30GB high-speed data.'
+          ]
+        },
+        {
+          heading: '2. Teahouse Wi-Fi Systems (Everest Link & Airzed)',
+          body: 'When cellular tower reception is blocked by massive granite cliffs, mountain lodges provide wireless internet via satellite microwave links:',
+          bullets: [
+            'Prepaid Wi-Fi Cards: Lodges sell scratch cards (Everest Link or Airzed) for NPR 400 to 600 (~$3–$5 USD) providing 10GB to 20GB of data valid for 24 hours.',
+            'Speed & Latency: Speeds range from 2 Mbps to 8 Mbps—ample for WhatsApp messaging, voice calls, and email. Satellite links can slow down during heavy rain or snow.'
+          ]
+        },
+        {
+          heading: '3. Electricity & Device Charging Protocols',
+          body: 'Above Sinuwa, the regional electrical grid ends. Teahouses operate exclusively on solar photovoltaic panels and lithium battery banks:',
+          bullets: [
+            'Charging Fees: Lower teahouses offer free wall outlets in dining halls; higher teahouses (Deurali, MBC, ABC) charge NPR 200 to 400 ($1.50–$3 USD) per device per full charge.',
+            'Cold Temperature Battery Drain: Sub-zero nighttime temperatures (-5°C to -10°C) cause lithium-ion phone and camera batteries to discharge rapidly. Always sleep with your phone and power bank inside your sleeping bag close to your body.',
+            'Power Bank Recommendation: Carry a 10,000mAh to 20,000mAh high-density power bank to charge your devices independently.'
+          ]
+        }
+      ],
+      proTip: 'In our 4-Star Mountain Premier and 5-Star Sanctuary Luxury tiers, all teahouse Wi-Fi cards and device solar charging fees are 100% complimentary and covered in your package.'
     }
   }
 ];

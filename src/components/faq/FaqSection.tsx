@@ -182,6 +182,48 @@ export const REAL_ABC_FAQS: FaqItem[] = [
     question: 'Can I fly back from Annapurna Base Camp to Pokhara via helicopter?',
     answer: 'Yes! Instead of spending 3 to 4 days hiking back down the thousands of stone steps through Bamboo and Chhomrong, you can board a chartered or shared Airbus H125 helicopter directly at Annapurna Base Camp (4,130m). The flight sweeps over the entire Modi Khola gorge, Fishtail peak, and Gurung villages, landing at Pokhara Airport in just 25 minutes. It is included in our 5-Star Luxury tier and available as an add-on for all other tiers.',
     tags: ['helicopter', 'heli return', 'flight', 'pokhara flight', 'scenic']
+  },
+  {
+    id: 'faq-stone-steps',
+    category: 'Route & Difficulty',
+    question: 'How many stone steps are on the Annapurna Base Camp trek? (Chhomrong staircase)',
+    answer: 'The Annapurna Base Camp trail is world-famous for its ancient stone staircases hand-carved by local Gurung stonemasons. The most notorious segment is the Chhomrong Staircase, featuring roughly 3,300 steep stone steps descending 400 vertical meters down to the Chhomrong Khola suspension bridge, followed immediately by another 2,500 stone steps ascending up into Sinuwa. Over the full 7 to 10-day round-trip, hikers navigate roughly 80,000 to 100,000 total steps. Bringing dual trekking poles and maintaining a steady rhythmic pacing cadence is essential to cushion knee joints on descents.',
+    tags: ['stone steps', 'chhomrong stairs', 'stairs count', 'sinuwa steps', 'knee care', 'steps on abc']
+  },
+  {
+    id: 'faq-poon-hill-combo',
+    category: 'Route & Difficulty',
+    question: 'Can I combine Poon Hill with Annapurna Base Camp (Ghorepani Poon Hill ABC Trek)?',
+    answer: 'Yes! The Ghorepani Poon Hill + Annapurna Base Camp combo is one of Nepal’s most popular 12 to 14-day trekking itineraries. By starting at Nayapul or Birethanti and ascending through Ulleri and Ghorepani to catch the legendary dawn sunrise over Mt. Dhaulagiri (8,167m) and the Annapurna massif from Poon Hill (3,210m), you enjoy panoramic viewpoint sunrises before crossing Tadapani directly into the classic ABC trail at Chhomrong. It adds only 3 extra days to your journey and provides valuable gradual acclimatization.',
+    tags: ['poon hill', 'ghorepani', 'combo trek', 'dhaulagiri sunrise', '12 day itinerary', 'poon hill abc']
+  },
+  {
+    id: 'faq-guide-mandatory-2026',
+    category: 'Permits & Rules',
+    question: 'Is a licensed guide mandatory for Annapurna Base Camp in 2026/2027?',
+    answer: 'Yes. Under official regulations enforced by the Nepal Tourism Board (NTB) and the Trekking Agencies Association of Nepal (TAAN), foreign trekkers are legally required to be accompanied by a government-certified, licensed trekking guide when entering conservation areas and national parks, including the Annapurna Conservation Area Project (ACAP). Solo Free Independent Trekkers (FIT) are no longer issued standalone TIMS cards without a licensed agency or guide endorsement. This regulation ensures emergency tracking, wilderness medical safety, and sustainable local mountain employment.',
+    tags: ['mandatory guide', 'nepal guide rule 2026', 'solo trekker ban', 'tims rule', 'ntb regulation', 'guide required']
+  },
+  {
+    id: 'faq-flight-luggage-limit',
+    category: 'Money & Logistics',
+    question: 'What is the luggage weight limit for flights and porters on the ABC trek?',
+    answer: 'For domestic flights between Kathmandu and Pokhara (operated by Buddha Air or Yeti Airlines), the standard luggage allowance is 15 kg (33 lbs) total per passenger—consisting of 10 kg checked baggage and 5 kg cabin carry-on. Excess weight is charged at approximately $1–$1.50 USD per kg. On the mountain trail, our dedicated 1:1 Porters carry up to 15 kg in a heavy-duty waterproof duffel bag, adhering strictly to International Porter Protection Group (IPPG) welfare rules. Extra luggage, city clothes, and hard suitcases can be stored safely free of charge at our hotel cloakrooms in Kathmandu or Pokhara Lakeside.',
+    tags: ['luggage limit', 'flight baggage', 'porter weight', 'duffel bag', 'storage', 'weight allowance']
+  },
+  {
+    id: 'faq-emergency-oxygen',
+    category: 'Health & Safety',
+    question: 'Do your guides carry emergency medical oxygen and satellite communication?',
+    answer: 'Yes. All our certified lead Sherpa guides carry clinical fingertip pulse oximeters to test your blood oxygen saturation (SpO2) and heart rate every morning and evening. In addition, our expedition equipment includes comprehensive wilderness trauma kits, emergency bottled oxygen cylinders, and satellite transponders or two-way VHF radios for areas where cellular signal drops in deep river canyons. In the event of Acute Mountain Sickness (AMS), immediate descent protocols and rapid helicopter extraction can be coordinated 24/7.',
+    tags: ['oxygen cylinder', 'pulse oximeter', 'satellite phone', 'medical kit', 'safety protocols']
+  },
+  {
+    id: 'faq-best-months-detail',
+    category: 'Route & Difficulty',
+    question: 'What is the difference between trekking ABC in Autumn vs Spring?',
+    answer: 'Autumn (late September to late November) offers the sharpest photographic visibility, minimal cloud cover, and highly stable weather because the summer monsoon has cleansed all atmospheric dust from the sky. Spring (March to May) features longer daylight hours, warmer afternoon hiking temperatures (15°C to 22°C at lower elevations), and mountainsides ablaze with blooming crimson, pink, and white wild rhododendrons (Nepal’s national flower, Lali Gurans). Both seasons represent gold-standard trekking windows in the Himalayas.',
+    tags: ['autumn vs spring', 'rhododendron bloom', 'best season comparison', 'october vs april', 'weather differences']
   }
 ];
 
