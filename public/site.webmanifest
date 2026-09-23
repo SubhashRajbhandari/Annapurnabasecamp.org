@@ -1,0 +1,19 @@
+{
+  "name": "Annapurna Base Camp Official Expedition Portal",
+  "short_name": "ABC Nepal",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0284c7",
+  "background_color": "#0f172a",
+  "display": "standalone"
+}
