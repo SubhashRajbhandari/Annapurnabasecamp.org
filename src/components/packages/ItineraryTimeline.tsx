@@ -14,7 +14,8 @@ import {
   Footprints, 
   Clock,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Check
 } from 'lucide-react';
 
 interface ItineraryTimelineProps {
@@ -107,22 +108,33 @@ export const ItineraryTimeline: React.FC<ItineraryTimelineProps> = ({
 
         {/* Tier Switcher Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
-          {(['3-star', '4-star', '5-star'] as PackageTier[]).map((t) => (
-            <button
-              key={t}
-              onClick={() => {
-                onSelectTier(t);
-                setSelectedDayIndex(0);
-              }}
-              className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
-                activeTier === t
-                  ? 'bg-slate-900 text-white shadow-md'
-                  : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200'
-              }`}
-            >
-              {'★'.repeat(TREK_PACKAGES[t].starRating)} {TREK_PACKAGES[t].title}
-            </button>
-          ))}
+          {(['3-star', '4-star', '5-star'] as PackageTier[]).map((t) => {
+            const isSelected = activeTier === t;
+            return (
+              <button
+                key={t}
+                onClick={() => {
+                  onSelectTier(t);
+                  setSelectedDayIndex(0);
+                }}
+                className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+                  isSelected
+                    ? t === '5-star'
+                      ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-lg ring-2 ring-amber-400/50'
+                      : t === '4-star'
+                      ? 'bg-gradient-to-r from-sky-600 to-blue-700 text-white shadow-lg ring-2 ring-sky-400/50'
+                      : 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-lg ring-2 ring-emerald-400/50'
+                    : 'bg-white text-slate-700 hover:text-slate-950 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                <span className={isSelected ? 'text-amber-300' : 'text-amber-500'}>
+                  {'★'.repeat(TREK_PACKAGES[t].starRating)}
+                </span>
+                <span>{TREK_PACKAGES[t].title}</span>
+                {isSelected && <Check className="w-3.5 h-3.5 text-white ml-0.5" />}
+              </button>
+            );
+          })}
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { PackageTier, PorterOption, BookingFormState } from '../../types/trek';
 import { TREK_PACKAGES } from '../../data/packages';
 import { Calculator, Users, Calendar, PlaneTakeoff, ShieldCheck, ArrowRight, DollarSign, CheckCircle2, Truck, Radio } from 'lucide-react';
@@ -13,6 +13,10 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
   onOpenModalWithState
 }) => {
   const [tier, setTier] = useState<PackageTier>(initialTier);
+
+  useEffect(() => {
+    setTier(initialTier);
+  }, [initialTier]);
   const [porterOption, setPorterOption] = useState<PorterOption>('private-1-1');
   const [groupSize, setGroupSize] = useState<number>(2);
   const [startDate, setStartDate] = useState<string>('2026-10-10');
