@@ -1,6 +1,129 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Compass, Calendar, Users, ShieldCheck, ArrowRight, Star, HeartHandshake, ChevronDown, Volume2, VolumeX, Play, Pause } from 'lucide-react';
+import { Compass, Calendar, Users, ShieldCheck, ArrowRight, Star, HeartHandshake, ChevronDown, Volume2, VolumeX, Play, Pause, Check, Award } from 'lucide-react';
 import type { PackageTier } from '../../types/trek';
+
+interface TierOption {
+  value: PackageTier;
+  stars: string;
+  name: string;
+  badge?: string;
+  badgeColor?: string;
+  tagline: string;
+  price: string;
+}
+
+const TIER_OPTIONS: TierOption[] = [
+  {
+    value: '4-star',
+    stars: '4★',
+    name: 'Mountain Premier',
+    badge: 'Most Popular',
+    badgeColor: 'bg-amber-100 text-amber-800 border-amber-300',
+    tagline: 'Dedicated 1:1 Porter • Private En-suite Lodges',
+    price: '$1,450',
+  },
+  {
+    value: '5-star',
+    stars: '5★',
+    name: 'Sanctuary Luxury',
+    badge: 'VIP Heli Flight',
+    badgeColor: 'bg-purple-100 text-purple-800 border-purple-300',
+    tagline: 'Airbus H125 Return from ABC • 5★ Pokhara Resort',
+    price: '$2,890',
+  },
+  {
+    value: '3-star',
+    stars: '3★',
+    name: 'Alpine Explorer',
+    badge: 'Classic Trek',
+    badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+    tagline: 'Authentic Mountain Teahouse • 1:2 Shared Porter',
+    price: '$890',
+  },
+];
+
+interface MonthOption {
+  value: string;
+  title: string;
+  badge?: string;
+  badgeColor?: string;
+  season: string;
+  highlights: string;
+}
+
+const MONTH_OPTIONS: MonthOption[] = [
+  {
+    value: 'October 2026 (Peak Autumn)',
+    title: 'Oct – Nov 2026',
+    badge: 'Peak Clear Skies',
+    badgeColor: 'bg-amber-100 text-amber-800 border-amber-300',
+    season: 'Autumn Season',
+    highlights: '50km+ crystal visibility • Stable dry weather',
+  },
+  {
+    value: 'April 2026 (Spring Blooms)',
+    title: 'Mar – May 2026',
+    badge: 'Rhododendrons',
+    badgeColor: 'bg-rose-100 text-rose-800 border-rose-300',
+    season: 'Spring Season',
+    highlights: 'Red rhododendron forest trails • Mild temperatures',
+  },
+  {
+    value: 'December 2026 (Winter Snow)',
+    title: 'Dec – Jan 2026/27',
+    badge: 'Pristine Solitude',
+    badgeColor: 'bg-sky-100 text-sky-800 border-sky-300',
+    season: 'Crisp Winter',
+    highlights: 'Deep snow sanctuary • Quiet trails & solitude',
+  },
+  {
+    value: 'Custom 2027',
+    title: '2027 Season',
+    badge: 'Early Bird Lock',
+    badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-300',
+    season: 'Advance Booking',
+    highlights: 'Price-lock guarantee • Guaranteed luxury lodge dates',
+  },
+];
+
+interface PartyOption {
+  value: number;
+  label: string;
+  badge?: string;
+  badgeColor?: string;
+  details: string;
+}
+
+const PARTY_OPTIONS: PartyOption[] = [
+  {
+    value: 1,
+    label: '1 Solo Trekker',
+    badge: 'Solo Private',
+    badgeColor: 'bg-slate-100 text-slate-800 border-slate-300',
+    details: 'Dedicated private Sherpa guide & 1:1 personal porter',
+  },
+  {
+    value: 2,
+    label: '2 Trekkers',
+    badge: 'Couples / Friends',
+    badgeColor: 'bg-sky-100 text-sky-800 border-sky-300',
+    details: 'Private twin/double room pacing with lead guide',
+  },
+  {
+    value: 4,
+    label: '4 Trekkers',
+    badge: 'Small Group',
+    badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+    details: 'Private alpine party with dedicated porters',
+  },
+  {
+    value: 6,
+    label: '6+ Trekkers',
+    badge: 'Custom Team',
+    badgeColor: 'bg-purple-100 text-purple-800 border-purple-300',
+    details: 'Lead guide + assistant guide + group discount savings',
+  },
+];
 
 interface HeroProps {
   onOpenBooking: (tier?: PackageTier) => void;
@@ -10,14 +133,36 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
   const [selectedTier, setSelectedTier] = useState<PackageTier>('4-star');
   const [selectedMonth, setSelectedMonth] = useState('October 2026 (Peak Autumn)');
   const [partySize, setPartySize] = useState(2);
+  const [openDropdown, setOpenDropdown] = useState<'tier' | 'month' | 'party' | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [isVideoReady, setIsVideoReady] = useState(false);
 
   const heroSectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const userPausedRef = useRef<boolean>(false);
   const [scrollY, setScrollY] = useState(0);
+
+  // Close dropdowns on outside click or Escape key
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -123,6 +268,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
 
   const handleQuickSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    setOpenDropdown(null);
     const bookingSection = document.getElementById('booking');
     if (bookingSection) {
       bookingSection.scrollIntoView({ behavior: 'smooth' });
@@ -130,6 +276,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
       onOpenBooking(selectedTier);
     }
   };
+
+  const currentTier = TIER_OPTIONS.find((t) => t.value === selectedTier) || TIER_OPTIONS[0];
+  const currentMonth = MONTH_OPTIONS.find((m) => m.value === selectedMonth) || MONTH_OPTIONS[0];
+  const currentParty = PARTY_OPTIONS.find((p) => p.value === partySize) || PARTY_OPTIONS[1];
 
   return (
     <section
@@ -203,77 +353,307 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           The official authority portal for premier trekking in Nepal. Handcrafted Annapurna Base Camp (ABC) expeditions with certified Sherpa leaders, dedicated 1:1 porters, boutique mountain lodges, and direct VIP helicopter descents.
         </p>
 
-        {/* Interactive Floating Quick-Booking Bar (Fishtail Tours Style) - High Transparency Frosted Glass */}
+        {/* Interactive Floating Quick-Booking Bar (Fishtail Tours Style) - Luxury Frosted Popovers */}
         <form
+          ref={formRef}
           onSubmit={handleQuickSearch}
-          className="w-full max-w-5xl bg-white/40 sm:bg-white/45 backdrop-blur-[2px] p-3 sm:p-5 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] border border-white/60 text-slate-950 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center text-left mb-8 sm:mb-10 hover:bg-white/55 transition-all duration-300"
+          className="w-full max-w-5xl bg-white/45 backdrop-blur-md p-2.5 sm:p-3.5 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] border border-white/70 text-slate-950 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 items-stretch text-left mb-8 sm:mb-10 hover:bg-white/55 transition-all duration-300 relative z-30"
         >
           {/* Field 1: Expedition Tier */}
-          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-400/60 bg-white/40 sm:bg-transparent rounded-2xl sm:rounded-none">
-            <label className="block text-[10px] font-black uppercase tracking-wider text-slate-800 mb-0.5">
-              Service Tier
-            </label>
-            <div className="relative">
-              <select
-                value={selectedTier}
-                onChange={(e) => setSelectedTier(e.target.value as PackageTier)}
-                className="w-full text-xs sm:text-sm font-black text-slate-950 focus:outline-none bg-transparent cursor-pointer appearance-none pr-6"
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpenDropdown(openDropdown === 'tier' ? null : 'tier')}
+              className={`w-full h-[62px] text-left px-3.5 py-2 rounded-2xl transition-all duration-200 cursor-pointer border flex flex-col justify-between select-none ${
+                openDropdown === 'tier'
+                  ? 'bg-white shadow-xl border-sky-500 ring-2 ring-sky-400/30'
+                  : 'bg-white/70 hover:bg-white/90 border-white/80 hover:border-sky-300 shadow-sm'
+              }`}
+              aria-haspopup="listbox"
+              aria-expanded={openDropdown === 'tier'}
+            >
+              <div className="flex items-center justify-between gap-1 w-full">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1">
+                  <Award className="w-3 h-3 text-amber-600 shrink-0" />
+                  <span>Service Tier</span>
+                </span>
+                <span className="text-[10px] font-black text-sky-700 bg-sky-100/80 px-1.5 py-0.5 rounded-md leading-none">
+                  {currentTier.price}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between gap-1 w-full">
+                <div className="min-w-0 pr-1">
+                  <div className="text-xs sm:text-sm font-black text-slate-950 truncate">
+                    {currentTier.stars} {currentTier.name}
+                  </div>
+                  <div className="text-[10px] text-slate-500 truncate font-semibold">
+                    {currentTier.badge}
+                  </div>
+                </div>
+                <ChevronDown
+                  className={`w-4 h-4 text-slate-600 shrink-0 transition-transform duration-200 ${
+                    openDropdown === 'tier' ? 'rotate-180 text-sky-600' : ''
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Dropdown Popover */}
+            {openDropdown === 'tier' && (
+              <div
+                className="absolute top-[calc(100%+8px)] left-0 z-50 w-full sm:w-[360px] bg-white/98 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] border border-slate-200/90 p-2 text-slate-900 ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-150"
+                role="listbox"
               >
-                <option value="4-star" className="bg-white text-slate-900">4★ Mountain Premier (1:1 Porter)</option>
-                <option value="5-star" className="bg-white text-slate-900">5★ Sanctuary Luxury (VIP Heli)</option>
-                <option value="3-star" className="bg-white text-slate-900">3★ Alpine Explorer (1:2 Porter)</option>
-              </select>
-              <ChevronDown className="w-4 h-4 text-slate-800 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
-            </div>
+                <div className="px-2.5 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100 flex items-center justify-between">
+                  <span>Select Expedition Tier</span>
+                  <span className="text-sky-600 font-black">All-Inclusive</span>
+                </div>
+                <div className="space-y-1 mt-1.5">
+                  {TIER_OPTIONS.map((opt) => {
+                    const isSelected = selectedTier === opt.value;
+                    return (
+                      <div
+                        key={opt.value}
+                        onClick={() => {
+                          setSelectedTier(opt.value);
+                          setOpenDropdown(null);
+                        }}
+                        className={`p-2.5 rounded-xl cursor-pointer transition-all duration-150 border text-left ${
+                          isSelected
+                            ? 'bg-sky-50/90 border-sky-300 text-sky-950 shadow-sm'
+                            : 'bg-white hover:bg-slate-50 border-transparent text-slate-800'
+                        }`}
+                        role="option"
+                        aria-selected={isSelected}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-1.5 min-w-0">
+                            <span className="text-xs font-black text-amber-700 shrink-0">{opt.stars}</span>
+                            <span className="text-xs sm:text-sm font-black truncate">{opt.name}</span>
+                            {opt.badge && (
+                              <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold border shrink-0 ${opt.badgeColor}`}>
+                                {opt.badge}
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="text-xs font-black text-slate-900">{opt.price}</span>
+                            {isSelected ? (
+                              <Check className="w-4 h-4 text-sky-600" />
+                            ) : (
+                              <div className="w-4 h-4" />
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-[11px] text-slate-500 font-medium mt-1 leading-snug">
+                          {opt.tagline}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Field 2: Departure Season / Month */}
-          <div className="px-3 py-2 border-b sm:border-b-0 lg:border-r border-slate-400/60 bg-white/40 sm:bg-transparent rounded-2xl sm:rounded-none">
-            <label className="block text-[10px] font-black uppercase tracking-wider text-slate-800 mb-0.5 flex items-center gap-1">
-              <Calendar className="w-3 h-3 text-sky-800" />
-              <span>Expedition Window</span>
-            </label>
-            <div className="relative">
-              <select
-                value={selectedMonth}
-                onChange={(e) => setSelectedMonth(e.target.value)}
-                className="w-full text-xs sm:text-sm font-black text-slate-950 focus:outline-none bg-transparent cursor-pointer appearance-none pr-6"
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpenDropdown(openDropdown === 'month' ? null : 'month')}
+              className={`w-full h-[62px] text-left px-3.5 py-2 rounded-2xl transition-all duration-200 cursor-pointer border flex flex-col justify-between select-none ${
+                openDropdown === 'month'
+                  ? 'bg-white shadow-xl border-sky-500 ring-2 ring-sky-400/30'
+                  : 'bg-white/70 hover:bg-white/90 border-white/80 hover:border-sky-300 shadow-sm'
+              }`}
+              aria-haspopup="listbox"
+              aria-expanded={openDropdown === 'month'}
+            >
+              <div className="flex items-center justify-between gap-1 w-full">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1">
+                  <Calendar className="w-3 h-3 text-sky-600 shrink-0" />
+                  <span>Expedition Window</span>
+                </span>
+                <span className="text-[10px] font-black text-emerald-700 bg-emerald-100/80 px-1.5 py-0.5 rounded-md leading-none">
+                  {currentMonth.season}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between gap-1 w-full">
+                <div className="min-w-0 pr-1">
+                  <div className="text-xs sm:text-sm font-black text-slate-950 truncate">
+                    {currentMonth.title}
+                  </div>
+                  <div className="text-[10px] text-slate-500 truncate font-semibold">
+                    {currentMonth.badge}
+                  </div>
+                </div>
+                <ChevronDown
+                  className={`w-4 h-4 text-slate-600 shrink-0 transition-transform duration-200 ${
+                    openDropdown === 'month' ? 'rotate-180 text-sky-600' : ''
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Dropdown Popover */}
+            {openDropdown === 'month' && (
+              <div
+                className="absolute top-[calc(100%+8px)] left-0 z-50 w-full sm:w-[350px] bg-white/98 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] border border-slate-200/90 p-2 text-slate-900 ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-150"
+                role="listbox"
               >
-                <option value="October 2026 (Peak Autumn)" className="bg-white text-slate-900">Oct - Nov 2026 (Autumn Clear Skies)</option>
-                <option value="April 2026 (Spring Blooms)" className="bg-white text-slate-900">Mar - May 2026 (Rhododendron Season)</option>
-                <option value="December 2026 (Winter Snow)" className="bg-white text-slate-900">Dec - Jan 2026 (Crisp Winter Snow)</option>
-                <option value="Custom 2027" className="bg-white text-slate-900">2027 Advance Booking</option>
-              </select>
-              <ChevronDown className="w-4 h-4 text-slate-800 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
-            </div>
+                <div className="px-2.5 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100 flex items-center justify-between">
+                  <span>Trek Season & Weather</span>
+                  <span className="text-sky-600 font-black">Optimal Timing</span>
+                </div>
+                <div className="space-y-1 mt-1.5">
+                  {MONTH_OPTIONS.map((opt) => {
+                    const isSelected = selectedMonth === opt.value;
+                    return (
+                      <div
+                        key={opt.value}
+                        onClick={() => {
+                          setSelectedMonth(opt.value);
+                          setOpenDropdown(null);
+                        }}
+                        className={`p-2.5 rounded-xl cursor-pointer transition-all duration-150 border text-left ${
+                          isSelected
+                            ? 'bg-sky-50/90 border-sky-300 text-sky-950 shadow-sm'
+                            : 'bg-white hover:bg-slate-50 border-transparent text-slate-800'
+                        }`}
+                        role="option"
+                        aria-selected={isSelected}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-1.5 min-w-0">
+                            <span className="text-xs sm:text-sm font-black truncate">{opt.title}</span>
+                            {opt.badge && (
+                              <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold border shrink-0 ${opt.badgeColor}`}>
+                                {opt.badge}
+                              </span>
+                            )}
+                          </div>
+                          <div className="shrink-0">
+                            {isSelected ? (
+                              <Check className="w-4 h-4 text-sky-600" />
+                            ) : (
+                              <div className="w-4 h-4" />
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-[11px] text-slate-500 font-medium mt-1 leading-snug">
+                          {opt.highlights}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Field 3: Group Size */}
-          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-slate-400/60 bg-white/40 sm:bg-transparent rounded-2xl sm:rounded-none">
-            <label className="block text-[10px] font-black uppercase tracking-wider text-slate-800 mb-0.5 flex items-center gap-1">
-              <Users className="w-3 h-3 text-sky-800" />
-              <span>Group Size</span>
-            </label>
-            <div className="relative">
-              <select
-                value={partySize}
-                onChange={(e) => setPartySize(Number(e.target.value))}
-                className="w-full text-xs sm:text-sm font-black text-slate-950 focus:outline-none bg-transparent cursor-pointer appearance-none pr-6"
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpenDropdown(openDropdown === 'party' ? null : 'party')}
+              className={`w-full h-[62px] text-left px-3.5 py-2 rounded-2xl transition-all duration-200 cursor-pointer border flex flex-col justify-between select-none ${
+                openDropdown === 'party'
+                  ? 'bg-white shadow-xl border-sky-500 ring-2 ring-sky-400/30'
+                  : 'bg-white/70 hover:bg-white/90 border-white/80 hover:border-sky-300 shadow-sm'
+              }`}
+              aria-haspopup="listbox"
+              aria-expanded={openDropdown === 'party'}
+            >
+              <div className="flex items-center justify-between gap-1 w-full">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1">
+                  <Users className="w-3 h-3 text-sky-600 shrink-0" />
+                  <span>Group Size</span>
+                </span>
+                <span className="text-[10px] font-black text-indigo-700 bg-indigo-100/80 px-1.5 py-0.5 rounded-md leading-none">
+                  Private
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between gap-1 w-full">
+                <div className="min-w-0 pr-1">
+                  <div className="text-xs sm:text-sm font-black text-slate-950 truncate">
+                    {currentParty.label}
+                  </div>
+                  <div className="text-[10px] text-slate-500 truncate font-semibold">
+                    {currentParty.badge || 'Private Trek'}
+                  </div>
+                </div>
+                <ChevronDown
+                  className={`w-4 h-4 text-slate-600 shrink-0 transition-transform duration-200 ${
+                    openDropdown === 'party' ? 'rotate-180 text-sky-600' : ''
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Dropdown Popover */}
+            {openDropdown === 'party' && (
+              <div
+                className="absolute top-[calc(100%+8px)] left-0 lg:left-auto lg:right-0 z-50 w-full sm:w-[330px] bg-white/98 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] border border-slate-200/90 p-2 text-slate-900 ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-150"
+                role="listbox"
               >
-                <option value={1} className="bg-white text-slate-900">1 Solo Trekker (Private Guide)</option>
-                <option value={2} className="bg-white text-slate-900">2 Trekkers (Couple / Friends)</option>
-                <option value={4} className="bg-white text-slate-900">4 Trekkers (Small Group)</option>
-                <option value={6} className="bg-white text-slate-900">6+ Trekkers (Private Group)</option>
-              </select>
-              <ChevronDown className="w-4 h-4 text-slate-800 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
-            </div>
+                <div className="px-2.5 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100 flex items-center justify-between">
+                  <span>Party Selection</span>
+                  <span className="text-sky-600 font-black">Private Sherpa</span>
+                </div>
+                <div className="space-y-1 mt-1.5">
+                  {PARTY_OPTIONS.map((opt) => {
+                    const isSelected = partySize === opt.value;
+                    return (
+                      <div
+                        key={opt.value}
+                        onClick={() => {
+                          setPartySize(opt.value);
+                          setOpenDropdown(null);
+                        }}
+                        className={`p-2.5 rounded-xl cursor-pointer transition-all duration-150 border text-left ${
+                          isSelected
+                            ? 'bg-sky-50/90 border-sky-300 text-sky-950 shadow-sm'
+                            : 'bg-white hover:bg-slate-50 border-transparent text-slate-800'
+                        }`}
+                        role="option"
+                        aria-selected={isSelected}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-1.5 min-w-0">
+                            <span className="text-xs sm:text-sm font-black truncate">{opt.label}</span>
+                            {opt.badge && (
+                              <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold border shrink-0 ${opt.badgeColor}`}>
+                                {opt.badge}
+                              </span>
+                            )}
+                          </div>
+                          <div className="shrink-0">
+                            {isSelected ? (
+                              <Check className="w-4 h-4 text-sky-600" />
+                            ) : (
+                              <div className="w-4 h-4" />
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-[11px] text-slate-500 font-medium mt-1 leading-snug">
+                          {opt.details}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Action Search Button */}
-          <div className="p-1 sm:p-0">
+          <div className="h-[62px] flex items-center">
             <button
               type="submit"
-              className="w-full py-3 sm:py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white shadow-xl shadow-sky-600/30 hover:shadow-sky-500/50 hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full h-full py-3 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white shadow-xl shadow-sky-600/30 hover:shadow-sky-500/50 hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer select-none"
             >
               <span>Check Rates & Book</span>
               <ArrowRight className="w-4 h-4" />
