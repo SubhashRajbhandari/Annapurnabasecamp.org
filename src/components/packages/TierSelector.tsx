@@ -111,34 +111,40 @@ export const TierSelector: React.FC<TierSelectorProps> = ({
           Every trekker has distinct comfort and logistical desires. Compare our authentic 3-Star Alpine Explorer, the popular 4-Star Mountain Premier with 1:1 dedicated porters, and the 5-Star Himalayan Sanctuary Luxury featuring VIP helicopter returns.
         </p>
 
-        {/* Tier Switcher Pills with Distinct Color Themes */}
-        <div className="flex max-w-full overflow-x-auto p-1.5 rounded-2xl bg-white border border-slate-200 mt-6 sm:mt-8 shadow-sm justify-start sm:justify-center gap-1.5">
+        {/* Tier Switcher Pills with Distinct Color Themes (Zero Scrollbar Grid Layout) */}
+        <div className="w-full max-w-3xl mx-auto p-1.5 rounded-2xl bg-white border border-slate-200 mt-6 sm:mt-8 shadow-sm grid grid-cols-1 sm:grid-cols-3 gap-1.5 overflow-hidden">
           {tiers.map((tier) => {
             const pkg = TREK_PACKAGES[tier];
             const isActive = activeTier === tier;
             const style = getTierStyle(tier, isActive);
+            // Compact name for 5-star to ensure equal balance across 3 columns
+            const displayTitle = tier === '5-star' ? 'Sanctuary Luxury' : pkg.title;
 
             return (
               <button
                 key={tier}
                 onClick={() => onSelectTier(tier)}
-                className={`px-3.5 sm:px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap ${
+                className={`w-full py-2 sm:py-2.5 px-3 sm:px-3.5 rounded-xl font-black text-xs sm:text-sm transition-all duration-200 flex items-center justify-between sm:justify-center gap-1.5 sm:gap-2 cursor-pointer ${
                   isActive
                     ? style.activePill
                     : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100 border border-transparent'
                 }`}
                 aria-pressed={isActive}
               >
-                <span className={isActive ? 'text-amber-300' : 'text-amber-500'}>
-                  {'★'.repeat(pkg.starRating)}
-                </span>
-                <span>{pkg.title}</span>
-                <span className={`text-[11px] px-1.5 py-0.5 rounded font-bold ${
-                  isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
-                }`}>
-                  ${pkg.basePriceUsd}
-                </span>
-                {isActive && <Check className="w-3.5 h-3.5 text-white shrink-0 ml-0.5" />}
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span className={isActive ? 'text-amber-300 shrink-0 font-bold' : 'text-amber-500 shrink-0 font-bold'}>
+                    {pkg.starRating}★
+                  </span>
+                  <span className="truncate">{displayTitle}</span>
+                </div>
+                <div className="flex items-center gap-1 shrink-0">
+                  <span className={`text-[10px] sm:text-[11px] px-1.5 py-0.5 rounded font-bold ${
+                    isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
+                  }`}>
+                    ${pkg.basePriceUsd}
+                  </span>
+                  {isActive && <Check className="w-3.5 h-3.5 text-white shrink-0" />}
+                </div>
               </button>
             );
           })}

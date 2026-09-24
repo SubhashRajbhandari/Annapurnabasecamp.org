@@ -462,13 +462,13 @@ export const FieldGuides: React.FC = () => {
           Researched and authored by licensed Himalayan expedition leaders. Dive into detailed cost breakdowns, weather calendars, route comparisons, and altitude acclimatization protocols.
         </p>
 
-        {/* Category Pills */}
-        <div className="flex max-w-full overflow-x-auto p-1 sm:p-1.5 rounded-2xl bg-white border border-slate-200 mt-6 sm:mt-8 shadow-sm justify-start sm:justify-center gap-1.5 scrollbar-none">
+        {/* Category Pills (No-scroll wrap layout) */}
+        <div className="flex flex-wrap justify-center p-1 sm:p-1.5 rounded-2xl bg-white border border-slate-200 mt-6 sm:mt-8 shadow-sm gap-1.5 max-w-4xl mx-auto">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3.5 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${
+              className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 activeCategory === cat
                   ? 'bg-slate-900 text-white shadow-md'
                   : 'text-slate-600 hover:text-slate-950 hover:bg-slate-50'
