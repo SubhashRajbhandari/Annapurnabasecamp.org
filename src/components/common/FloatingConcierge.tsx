@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { MessageSquare, X } from 'lucide-react';
+import { MessageSquare, X, Mail } from 'lucide-react';
 import { trackWhatsAppClick } from '../../lib/analytics';
 
-export const FloatingConcierge: React.FC = () => {
+interface FloatingConciergeProps {
+  onOpenInquiry?: (topic?: string) => void;
+}
+
+export const FloatingConcierge: React.FC<FloatingConciergeProps> = ({ onOpenInquiry }) => {
   const [minimized, setMinimized] = useState(() => {
     if (typeof window !== 'undefined') {
       return window.innerWidth < 640;
@@ -42,16 +46,28 @@ export const FloatingConcierge: React.FC = () => {
             Planning your Annapurna trek? Get instant route advice & season dates directly on WhatsApp.
           </p>
 
-          <a
-            href="https://wa.me/9779820107807?text=Namaste%20Ang%20Sherpa!%20I%20am%20planning%20an%20Annapurna%20Base%20Camp%20trek%20and%20would%20love%20some%20guidance."
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackWhatsAppClick('Floating Concierge')}
-            className="w-full py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/25 transition-all"
-          >
-            <MessageSquare className="w-3.5 h-3.5" />
-            <span>Chat on WhatsApp</span>
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href="https://wa.me/9779820107807?text=Namaste%20Ang%20Sherpa!%20I%20am%20planning%20an%20Annapurna%20Base%20Camp%20trek%20and%20would%20love%20some%20guidance."
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick('Floating Concierge')}
+              className="flex-1 py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/25 transition-all"
+            >
+              <MessageSquare className="w-3.5 h-3.5" />
+              <span>WhatsApp</span>
+            </a>
+
+            {onOpenInquiry && (
+              <button
+                onClick={() => onOpenInquiry('Sherpa Concierge Query')}
+                className="flex-1 py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all cursor-pointer"
+              >
+                <Mail className="w-3.5 h-3.5 text-sky-400" />
+                <span>Email Query</span>
+              </button>
+            )}
+          </div>
         </div>
       ) : (
         <button

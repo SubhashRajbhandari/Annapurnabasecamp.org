@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, ShieldCheck, Compass, Sparkles, Calendar, Menu, X, ArrowUpRight, BookOpen } from 'lucide-react';
+import { MessageSquare, ShieldCheck, Compass, Sparkles, Calendar, Menu, X, ArrowUpRight, BookOpen, Mail } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
 import { trackWhatsAppClick } from '../../lib/analytics';
 import type { ScrollTelemetry } from '../../hooks/useScrollTelemetry';
@@ -7,11 +7,13 @@ import type { ScrollTelemetry } from '../../hooks/useScrollTelemetry';
 interface NavbarProps {
   telemetry: ScrollTelemetry;
   onOpenBooking: () => void;
+  onOpenInquiry?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   telemetry,
-  onOpenBooking
+  onOpenBooking,
+  onOpenInquiry
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
@@ -130,6 +132,22 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Action CTA & Quick Contact */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Ask a Question / Direct Email Inquiry */}
+            {onOpenInquiry && (
+              <button
+                onClick={onOpenInquiry}
+                className={`hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-500 shrink-0 cursor-pointer ${
+                  isLightHeader
+                    ? 'bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-100'
+                    : 'bg-white/15 text-white border border-white/25 hover:bg-white/25 backdrop-blur-md drop-shadow-sm'
+                }`}
+                title="Ask a Question or Send Inquiry to Expedition Team"
+              >
+                <Mail className="w-3.5 h-3.5 text-sky-400" />
+                <span>Ask a Question</span>
+              </button>
+            )}
+
             {/* WhatsApp Direct Chat */}
             <a
               href="https://wa.me/9779820107807?text=Namaste!%20I%20am%20interested%20in%20booking%20the%20Annapurna%20Base%20Camp%20Trek."
@@ -252,6 +270,22 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               Dynamic Pricing Configurator
             </a>
+            {onOpenInquiry && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenInquiry();
+                }}
+                className={`w-full py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 font-bold text-xs border transition cursor-pointer ${
+                  isLightHeader
+                    ? 'bg-sky-50 text-sky-900 border-sky-200 hover:bg-sky-100'
+                    : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
+                }`}
+              >
+                <Mail className="w-4 h-4 text-sky-400" />
+                <span>Ask a Question / Custom Inquiry</span>
+              </button>
+            )}
             <button
               onClick={() => {
                 setMobileMenuOpen(false);

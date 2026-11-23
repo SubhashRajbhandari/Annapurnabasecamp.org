@@ -1,4 +1,5 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { sendBookingNotificationEmail } from './emailService';
 import type { PackageTier, PorterOption } from '../types/trek';
 
 export interface CreateBookingInput {
@@ -169,6 +170,29 @@ export async function createBooking(input: CreateBookingInput): Promise<BookingR
         console.warn('[Supabase DB] Member insertion warning:', memberError);
       }
 
+      // Dispatch instant email notification to subhash.link123@gmail.com
+      sendBookingNotificationEmail({
+        bookingCode,
+        fullName: input.fullName,
+        email: input.email,
+        phone: input.phone,
+        nationality: input.nationality,
+        tier: input.tier,
+        porterOption: input.porterOption,
+        groupSize: input.groupSize,
+        startDate: input.startDate,
+        totalPrice: input.totalPrice,
+        currency: input.currency,
+        heliReturn: input.heliReturn,
+        gearRental: input.gearRental,
+        satelliteDevice: input.satelliteDevice,
+        privateJeep: input.privateJeep,
+        dietary: input.dietary,
+        specialRequests: input.specialRequests,
+        passportUrl,
+        insuranceUrl
+      }).catch((e) => console.warn('[Booking] Email notification trigger failed:', e));
+
       return {
         success: true,
         bookingCode,
@@ -205,6 +229,29 @@ export async function createBooking(input: CreateBookingInput): Promise<BookingR
   } catch {
     // safe storage ignore
   }
+
+  // Dispatch instant email notification to subhash.link123@gmail.com
+  sendBookingNotificationEmail({
+    bookingCode,
+    fullName: input.fullName,
+    email: input.email,
+    phone: input.phone,
+    nationality: input.nationality,
+    tier: input.tier,
+    porterOption: input.porterOption,
+    groupSize: input.groupSize,
+    startDate: input.startDate,
+    totalPrice: input.totalPrice,
+    currency: input.currency,
+    heliReturn: input.heliReturn,
+    gearRental: input.gearRental,
+    satelliteDevice: input.satelliteDevice,
+    privateJeep: input.privateJeep,
+    dietary: input.dietary,
+    specialRequests: input.specialRequests,
+    passportUrl,
+    insuranceUrl
+  }).catch((e) => console.warn('[Booking Mock] Email notification trigger failed:', e));
 
   return {
     success: true,

@@ -1,6 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { HelpCircle, ChevronDown, Search, Sparkles, MessageSquare } from 'lucide-react';
+import { HelpCircle, ChevronDown, Search, Sparkles, MessageSquare, Mail } from 'lucide-react';
 import { trackWhatsAppClick } from '../../lib/analytics';
+
+export interface FaqSectionProps {
+  onOpenInquiry?: (topic?: string) => void;
+}
 
 export interface FaqItem {
   id: string;
@@ -227,7 +231,7 @@ export const REAL_ABC_FAQS: FaqItem[] = [
   }
 ];
 
-export const FaqSection: React.FC = () => {
+export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenInquiry }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq-overview');
@@ -396,6 +400,15 @@ export const FaqSection: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
+          {onOpenInquiry && (
+            <button
+              onClick={() => onOpenInquiry('General FAQ & Route Inquiry')}
+              className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
+            >
+              <Mail className="w-4 h-4 text-sky-600" />
+              <span>Send Query via Email</span>
+            </button>
+          )}
           <a
             href="https://wa.me/9779820107807?text=Namaste!%20I%20have%20a%20question%20about%20the%20Annapurna%20Base%20Camp%20Trek."
             target="_blank"

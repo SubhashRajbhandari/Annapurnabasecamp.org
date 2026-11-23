@@ -3,7 +3,11 @@ import { Phone, Mail, MessageSquare, ShieldCheck, MapPin, Heart } from 'lucide-r
 import { BrandLogo } from '../common/BrandLogo';
 import { trackWhatsAppClick } from '../../lib/analytics';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenInquiry?: (topic?: string) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
   return (
     <footer className="bg-slate-900 text-slate-300 text-xs pt-16 pb-12 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
       <div className="max-w-7xl mx-auto">
@@ -125,8 +129,17 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex items-center gap-2 text-white font-medium">
                 <Mail className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                <a href="mailto:expedition@annapurnabasecamp.org" className="hover:text-sky-300 transition-colors">expedition@annapurnabasecamp.org</a>
+                <a href="mailto:subhash.link123@gmail.com" className="hover:text-sky-300 transition-colors">subhash.link123@gmail.com</a>
               </div>
+              {onOpenInquiry && (
+                <button
+                  onClick={() => onOpenInquiry('Footer Quick Inquiry')}
+                  className="w-full mt-1.5 py-1.5 px-3 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-sky-300 hover:text-white font-bold text-[11px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-slate-600/60"
+                >
+                  <Mail className="w-3 h-3 text-sky-400" />
+                  <span>Send Inquiry Form</span>
+                </button>
+              )}
               <div className="flex items-center gap-2 text-slate-400 pt-1 border-t border-slate-700 text-[11px]">
                 <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
                 <span>Lakeside Pokhara & Thamel Kathmandu</span>

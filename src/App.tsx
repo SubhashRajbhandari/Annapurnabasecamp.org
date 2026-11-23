@@ -9,6 +9,7 @@ import { FieldGuides } from './components/guides/FieldGuides';
 import { ItineraryTimeline } from './components/packages/ItineraryTimeline';
 import { BookingEngine } from './components/booking/BookingEngine';
 import { BookingModal } from './components/booking/BookingModal';
+import { InquiryModal } from './components/inquiry/InquiryModal';
 import { AltitudeGuide } from './components/safety/AltitudeGuide';
 import { GearChecklist } from './components/safety/GearChecklist';
 import { FaqSection } from './components/faq/FaqSection';
@@ -37,11 +38,18 @@ export const App: React.FC = () => {
     specialRequests: ''
   });
   const [modalPrice, setModalPrice] = useState<number>(2900);
+  const [inquiryOpen, setInquiryOpen] = useState<boolean>(false);
+  const [inquiryTopic, setInquiryTopic] = useState<string>('Custom Itinerary & Dates');
 
   useEffect(() => {
     document.documentElement.classList.add('light');
     document.documentElement.classList.remove('dark');
   }, []);
+
+  const handleOpenInquiry = (topic?: string) => {
+    if (topic) setInquiryTopic(topic);
+    setInquiryOpen(true);
+  };
 
   // Trigger booking jump
   const handleOpenBooking = () => {
@@ -77,6 +85,7 @@ export const App: React.FC = () => {
       <Navbar
         telemetry={telemetry}
         onOpenBooking={handleOpenBooking}
+        onOpenInquiry={handleOpenInquiry}
       />
 
       {/* Main Content Area */}
@@ -117,11 +126,11 @@ export const App: React.FC = () => {
         </section>
 
         {/* Essential Himalayan Knowledge & FAQs for Trekking in Nepal */}
-        <FaqSection />
+        <FaqSection onOpenInquiry={handleOpenInquiry} />
       </main>
 
       {/* Floating Sherpa Concierge for Instant WhatsApp Conversions */}
-      <FloatingConcierge />
+      <FloatingConcierge onOpenInquiry={handleOpenInquiry} />
 
       {/* Floating Smooth Scroll to Top / Ascent Telemetry Button */}
       {telemetry.isScrolled && (
@@ -139,7 +148,7 @@ export const App: React.FC = () => {
       )}
 
       {/* Official Portal Footer */}
-      <Footer />
+      <Footer onOpenInquiry={handleOpenInquiry} />
 
       {/* Booking & Permit Registration Modal */}
       <BookingModal
@@ -147,6 +156,13 @@ export const App: React.FC = () => {
         onClose={() => setModalOpen(false)}
         bookingData={modalBookingData}
         totalPrice={modalPrice}
+      />
+
+      {/* General Question & Custom Expedition Inquiry Modal */}
+      <InquiryModal
+        isOpen={inquiryOpen}
+        onClose={() => setInquiryOpen(false)}
+        defaultTopic={inquiryTopic}
       />
     </div>
   );
